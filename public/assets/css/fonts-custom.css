@@ -1,0 +1,35 @@
+/* Orbitron - Regular (400) */
+@font-face {
+    font-family: 'Orbitron';
+    src: url('/assets/font-files/orbitron-regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Orbitron - Bold (700) */
+@font-face {
+    font-family: 'Orbitron';
+    src: url('/assets/font-files/orbitron-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Rajdhani - Regular (400) */
+@font-face {
+    font-family: 'Rajdhani';
+    src: url('/assets/font-files/rajdhani-regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Rajdhani - SemiBold (600) */
+@font-face {
+    font-family: 'Rajdhani';
+    src: url('/assets/font-files/rajdhani-semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}

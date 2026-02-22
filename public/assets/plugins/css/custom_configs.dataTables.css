@@ -1,0 +1,62 @@
+.dataTables_length {
+  margin-bottom: 15px;
+  margin-right: 20px;
+}
+
+/* Aumenta o espaçamento do campo de busca */
+.dataTables_filter {
+  margin-bottom: 15px;
+  margin-left: 20px;
+}
+
+/* Aumenta o espaçamento da paginação */
+.dataTables_paginate {
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+/* Paginação */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  background-color: #f0f0f0;
+  color: #3190e9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 2px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #066fd1; /* botão ativo - como na imagem */
+  color: #fff !important;
+  font-weight: bold;
+}
+
+/* Campo de busca */
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+ /* width: 200px; */
+}
+
+.table-hover-click tbody tr {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Transição suave para todas as células */
+table.dataTable tbody tr td {
+  transition: background-color 0.2s;
+}
+
+/* Hover no tema escuro */
+html[data-bs-theme='dark'] table.dataTable tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  cursor: pointer;
+}
+
+/* Hover no tema claro (sem data-bs-theme = padrão) */
+html:not([data-bs-theme]) table.dataTable tbody tr:hover td {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  cursor: pointer;
+}

@@ -1,0 +1,258 @@
+:root {
+    --brand-green: #32ba3c;
+    --brand-glow: 0 0 15px rgba(50, 186, 60, 0.5);
+    --brand-hover: #28a745;
+    --tblr-primary: var(--brand-green);
+    --tblr-font-sans-serif: 'Rajdhani', sans-serif !important;
+    --bg-body: #050505;
+}
+/* Ajuste manual para o tema claro */
+[data-bs-theme="light"] {
+    --bg-body: #f4f7f6;
+    --tblr-bg-surface: #ffffff;
+}
+body {
+    background-color: var(--bg-body);
+    font-family: 'Rajdhani', sans-serif !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+/* Aura de Fundo Neon */
+.neon-aura {
+    position: fixed;
+    top: 50%; left: 50%;
+    width: 300px; height: 300px;
+    background: var(--brand-green);
+    filter: blur(150px);
+    opacity: 0.15;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    pointer-events: none;
+}
+/* Card com Glow */
+.login-card {
+    border: 1px solid rgba(50, 186, 60, 0.3) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 24px !important;
+    background-color: var(--tblr-bg-surface) !important;
+    transition: all 0.3s ease;
+}
+[data-bs-theme="dark"] .login-card {
+    box-shadow: 0 0 20px rgba(50, 186, 60, 0.1);
+}
+.brand-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--tblr-body-color);
+    text-shadow: 0 0 10px rgba(50, 186, 60, 0.3);
+}
+.brand-logo span { color: var(--brand-green); }
+.form-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--brand-green);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+/* 1. Garante que a fonte Rajdhani seja soberana em todos os modos */
+:root, [data-bs-theme="light"], [data-bs-theme="dark"] {
+    --tblr-font-sans-serif: 'Rajdhani', sans-serif !important;
+}
+/* 2. Força a fonte nos inputs e labels para evitar a troca automática */
+.form-control, .form-label, body {
+    font-family: 'Rajdhani', sans-serif !important;
+}
+/* 3. Mantém o Orbitron apenas onde você realmente quer (Labels e Botões) */
+.form-label, .btn-brand, .brand-logo {
+    font-family: 'Orbitron', sans-serif !important;
+}
+.form-control {
+    border-radius: 12px;
+    padding: 12px 16px;
+    background: var(--tblr-bg-body);
+    border: 1px solid var(--tblr-border-color);
+    color: var(--tblr-body-color);
+    font-size: 18px;
+    /* Adicionando a fonte aqui também por segurança */
+    font-family: 'Rajdhani', sans-serif !important; 
+}
+.form-control:focus {
+    border-color: var(--brand-green);
+    box-shadow: 0 0 12px rgba(50, 186, 60, 0.4);
+    background: var(--tblr-bg-body);
+    
+}
+.btn-brand {
+    background: var(--brand-green);
+    color: white !important;
+    border-radius: 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(50, 186, 60, 0.4);
+    transition: all 0.3s;
+}
+.btn-brand:hover {
+    background: var(--brand-hover);  
+    box-shadow: 0 0 25px rgba(50, 186, 60, 0.7);
+    transform: translateY(-3px);
+    filter: none;
+}
+.theme-toggle {
+    position: fixed;
+    top: 20px; right: 20px;
+    z-index: 1000;
+}
+/* Esconde a logo clara no modo escuro */
+[data-bs-theme="dark"] .logo-light {
+    display: none !important;
+}
+/* Esconde a logo escura no modo claro */
+[data-bs-theme="light"] .logo-dark {
+    display: none !important;
+}
+/* Caso o tema seja automático/padrão */
+.logo-dark {
+    display: none;
+}
+[data-bs-theme="dark"] .logo-dark {
+    display: block;
+}
+/* Faz com que o link da marca ocupe 100% da largura do box pai */
+.navbar-brand {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centraliza a logo */
+    margin-bottom: 2rem;    /* Espaço entre a logo e o início do formulário */
+}
+/* Remove os limites de altura do Tabler e faz a imagem ser responsiva */
+.navbar-brand-image {
+    height: auto !important;      /* Remove a altura fixa de 2rem */
+    width: 100%;                  /* Faz ocupar a largura total do box */
+    max-width: 300px;             /* Ajuste esse valor para o tamanho que achar ideal */
+    display: block;
+    margin: 0 auto;
+}
+/* Overlay Principal */
+.loader-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* Usa a cor de fundo do Tabler convertida para RGB para aplicar opacidade */
+    background: var(--tblr-bg-body-rgb);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: background 0.3s ease;
+}
+/* Cor para o Tema Escuro (Sólida) */
+[data-bs-theme="dark"] .loader-overlay {
+    background-color: #050505 !important; /* Seu preto customizado */
+}
+/* Cor para o Tema Claro (Sólida) */
+[data-bs-theme="light"] .loader-overlay {
+    background-color: #f4f7f6 !important; /* O cinza claro do seu body */
+}
+.loader-content { text-align: center; width: 100%; max-width: 400px; padding: 20px; }
+/* Linha de Scanner que sobe e desce */
+.scanner-line {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--brand-green);
+    box-shadow: 0 0 20px var(--brand-green);
+    animation: scan 2s linear infinite;
+}
+/* Garante que o scanner brilhe mais no modo escuro */
+[data-bs-theme="dark"] .scanner-line {
+    box-shadow: 0 0 25px var(--brand-green);
+
+}
+/* No modo claro, suavizamos o brilho para não agredir */
+[data-bs-theme="light"] .scanner-line {
+    box-shadow: 0 0 10px var(--brand-green);
+
+}
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+/* Barra de Progresso Futurista */
+.progress-bar-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(50, 186, 60, 0.1);
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--brand-green);
+    box-shadow: 0 0 15px var(--brand-green);
+    animation: fillProgress 2s ease-in-out forwards;
+}
+@keyframes fillProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+/* Texto piscante e Badges */
+.blink { animation: blinker 1s linear infinite; }
+@keyframes blinker { 50% { opacity: 0; } }
+/* Ajuste das badges para o tema */
+.status-tags .badge {
+    border: 1px solid var(--brand-green);
+    color: var(--brand-green);
+    font-family: 'Orbitron', sans-serif;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+.system-version {
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: 0.5;
+    color: var(--tblr-body-color);
+    transition: opacity 0.3s ease;
+}
+
+/* overlay do login */
+.card-loader-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tblr-bg-surface) !important;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px; /* O mesmo do seu card */
+    backdrop-filter: blur(4px); /* Efeito de desfoque gamer */
+    transition: all 0.3s ease;
+    border-radius: 24px !important;
+}
+
+.loading-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--brand-green);
+    text-shadow: 0 0 5px rgba(50, 186, 60, 0.5);
+}
+
+/* Cor personalizada para o spinner do Tabler */
+.text-green {
+    color: var(--brand-green) !important;
+}
