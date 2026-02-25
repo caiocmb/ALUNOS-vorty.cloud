@@ -10,8 +10,8 @@ class LoginModel
         $data = [
             'cpf' => $dados['cpf'],
             'password' => $dados['password'],
-            'company' => '48685431000165',
-            'application' => 'alunos'
+            'company' => $_ENV['COMPANY_CNPJ'],
+            'application' => $_ENV['APP_APPLICATION']
         ];
 
         $urlFinal = $_ENV['API_URL']."/login/";

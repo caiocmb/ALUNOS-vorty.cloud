@@ -47,8 +47,8 @@
         <div class="container container-tight py-4">
             <div class="text-center mb-5 logo-card">
                 <div class="">
-                  <img src="/assets/img/logos/powerliffe-preta.svg" class="logo-light navbar-brand-image" alt="Claro">
-                  <img src="/assets/img/logos/powerliffe-branca.svg" class="logo-dark navbar-brand-image" alt="Escuro">
+                  <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_DARK'] ?>" class="logo-light navbar-brand-image" alt="Claro">
+                  <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_LIGHT'] ?>" class="logo-dark navbar-brand-image" alt="Escuro">
                 </div>
                 <p class="text-muted small text-uppercase" style="letter-spacing: 3px;">Portal do Aluno</p>
             </div>

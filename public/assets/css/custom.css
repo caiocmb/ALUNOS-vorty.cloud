@@ -1,91 +1,52 @@
-@font-face { font-family:'Inter var'; font-style:normal; font-weight:100 900; font-display:swap; src: url('../font-files/InterVariable.woff2?v=4.1') format('woff2'); }
-@font-face { font-family:'Inter var'; font-style:italic; font-weight:100 900; font-display:swap; src: url('../font-files/InterVariable-Italic.woff2?v=4.1') format('woff2'); }
 
-:root {
-  --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+/* Shimmer Effect */
+.shimmer {
+    position: relative;
+    overflow: hidden;
 }
 
-body {
-  font-feature-settings: "cv03", "cv04", "cv11";
+.shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%;
+    width: 20%; height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(30deg);
+    animation: light-ray 4s infinite;
 }
 
-/* Hover: apenas ao passar o mouse */
-.favorite-toggle:hover path {
-    stroke: gold;
-}
-.navbar-brand-image {
-    filter: none !important;
-}
-/* Desktop (funcionou pra você) */
-@media (min-width: 769px) {
-  .dropdown-menu.dropdown-menu-card.show {
-    min-width: 700px !important;
-    max-width: none !important;
-  }
+@keyframes light-ray {
+    0% { left: -60%; }
+    20% { left: 120%; }
+    100% { left: 120%; }
 }
 
-/* Mobile / Tablet */
-@media (max-width: 768px) {
-  .dropdown-menu.dropdown-menu-card.show {
-
-    min-width: 400px !important;
-  }
+.avatar-glow {
+    box-shadow: 0 0 15px rgba(50, 186, 60, 0.3);
+    border: 2px solid var(--brand-green);
 }
 
-#vaneco-container {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-    z-index: 9999;
-    opacity: 0;
-    transform: translateY(30px) scale(0.9);
-    animation: smoothAppear 0.8s ease forwards;
+/* Esconde a logo clara no modo escuro */
+[data-bs-theme="dark"] .logo-light {
+    display: none !important;
 }
 
-#vaneco {
-    width: 90px;
-    height: auto;
+/* Esconde a logo escura no modo claro */
+[data-bs-theme="light"] .logo-dark {
+    display: none !important;
 }
 
-#vaneco-bubble {
-    background: white;
-    padding: 12px 16px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    font-size: 14px;
-    color: #333;
-    border: 2px solid #e1e1e1;
-    max-width: 200px;
-
-    opacity: 0;
-    transform: translateY(10px);
-    animation: bubbleAppear 0.8s ease forwards;
-    animation-delay: 0.6s; /* entra depois do Vaneco */
-
-     margin-bottom: 40px; /* Ajuste aqui para subir mais ou menos */
+/* Caso o tema seja automático/padrão */
+.logo-dark {
+    display: none;
 }
 
-@keyframes smoothAppear {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+[data-bs-theme="dark"] .logo-dark {
+    display: block;
 }
 
-@keyframes bubbleAppear {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.brand-orbitron {
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(50, 186, 60, 0.4);
 }

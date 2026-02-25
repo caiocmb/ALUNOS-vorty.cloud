@@ -51,7 +51,9 @@ class LoginController extends Controller {
 
         //grava as sessões necessarias       
         $_SESSION['user_id'] = $data->data->uid;
-        $_SESSION['user_name'] = $data->data->name;
+        $_SESSION['user_name'] = ($data->data->social_name) ?? (strtok($data->data->name, " "));
+        $_SESSION['user_status'] = $data->data->status;
+        $_SESSION['user_photo'] = $data->data->photo;
         $_SESSION['user_token'] = $data->data->token;
 
         $this->json($data);

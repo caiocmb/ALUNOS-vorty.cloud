@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Liffe - Portal do Aluno</title>
+    <title><?= $_ENV['COMPANY_NAME']; ?> - Portal do Aluno</title>
     
     <!-- CSS files -->
     <link rel="stylesheet" href="/assets/css/tabler.min.css?<?= $_ENV['APP_VERSAO'] ?>">
     <link rel="stylesheet" href="/assets/css/toastr.min.css?<?= $_ENV['APP_VERSAO'] ?>" />
     <link rel="stylesheet" href="/assets/css/fonts-custom.css?<?= $_ENV['APP_VERSAO'] ?>" />
     <link rel="stylesheet" href="/assets/css/driver.css?<?= $_ENV['APP_VERSAO'] ?>" />
+    <link rel="stylesheet" href="/assets/css/custom.css?<?= $_ENV['APP_VERSAO'] ?>" />
 
-    <link rel="icon" type="image/png" href="/assets/img/favicon.png">  
+    <link rel="icon" type="image/png" href="/assets/img/<?= $_ENV['COMPANY_FAVICON'] ?>">  
     <?php 
       $cssPath = __DIR__ . '/../../../public/assets/css_app/';
       if(isset($css_config))
@@ -30,8 +31,8 @@
             <div class="container-xl">
                 <h1 class="navbar-brand ">
                     <a href="/home/">
-                        <img src="/assets/img/logos/powerliffe-preta.svg" alt="Power Liffe" class="navbar-brand-image logo-light">                        
-                        <img src="/assets/img/logos/powerliffe-branca.svg" alt="Power Liffe" class="navbar-brand-image logo-dark">
+                        <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_DARK'] ?>" alt="Power Liffe" class="navbar-brand-image logo-light">                        
+                        <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_LIGHT'] ?>" alt="Power Liffe" class="navbar-brand-image logo-dark">
                     </a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
