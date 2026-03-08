@@ -1,0 +1,13 @@
+.space-y-2 > * + * { margin-top: 0.75rem !important; }
+
+/* Badge Customization para o Tabler */
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.35em 0.65em;
+    border-radius: 4px;
+}
+
+[data-bs-theme="dark"] .portal-card {
+    border: 1px solid rgba(255,255,255,0.05);
+}

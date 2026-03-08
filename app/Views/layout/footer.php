@@ -30,6 +30,7 @@
 <script src="/assets/js/jquery-3.7.1.min.js?<?= $_ENV['APP_VERSAO'] ?>"></script>
 <script src="/assets/js/driver.js.iife.js?<?= $_ENV['APP_VERSAO'] ?>"></script>
 <script src="/assets/js_app/theme.js?<?= $_ENV['APP_VERSAO'] ?>"></script>
+<script src="/assets/js/toastr.min.js?<?= $_ENV['APP_VERSAO'] ?>"></script>
 
 <!-- ### Custom Scripts  ### -->
 <?php 

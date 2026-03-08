@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Liffe - Login</title>
+    <title>Login - <?= $_ENV['COMPANY_NAME'] ?></title>
     
 
     <link rel="stylesheet" href="/assets/css/tabler.min.css?<?= $_ENV['APP_VERSAO'] ?>">

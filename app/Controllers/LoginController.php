@@ -55,6 +55,7 @@ class LoginController extends Controller {
         $_SESSION['user_status'] = $data->data->status;
         $_SESSION['user_photo'] = $data->data->photo;
         $_SESSION['user_token'] = $data->data->token;
+        $_SESSION['refresh_token'] = $data->data->refresh_token;
 
         $this->json($data);
         exit;

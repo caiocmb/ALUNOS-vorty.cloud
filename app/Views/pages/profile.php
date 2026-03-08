@@ -34,19 +34,19 @@
                             </span>
                             <label for="upload-photo" class="btn btn-icon btn-primary rounded-circle position-absolute bottom-0 end-0 shadow-lg" style="width: 36px; height: 36px; cursor: pointer; border: 2px solid var(--tblr-bg-surface);">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                                <input type="file" id="upload-photo" class="d-none" onchange="previewImage(this)">
+                                <input type="file" id="upload-photo" class="d-none" accept="image/*" onchange="previewImage(this)">
                             </label>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small text-muted text-uppercase mb-2">Nome Social</label>
-                        <input type="text" class="form-control" placeholder="Como quer ser chamado?" 
+                        <input type="text" id="user_name" class="form-control" placeholder="Como quer ser chamado?" 
                                value="<?= $_SESSION['user_name']; ?>" 
                                style="background: transparent; border: 1px solid var(--tblr-border-color); height: 50px; border-radius: 10px;">
                     </div>
 
-                    <button class="btn btn-success w-100 py-2 shimmer border-0 shadow-sm mt-3" style="border-radius: 10px; font-weight: 600; height: 50px;">
+                    <button class="btn btn-success w-100 py-2 shimmer border-0 shadow-sm mt-3" id="btn-save-profile" style="border-radius: 10px; font-weight: 600; height: 50px;">
                         Salvar Alterações
                     </button>
                 </div>
@@ -58,17 +58,17 @@
                 <div class="card-body p-4">
                     <div class="mb-3">
                         <label class="form-label small text-muted text-uppercase">Senha Atual</label>
-                        <input type="password" class="form-control" style="background: transparent; border: 1px solid var(--tblr-border-color); height: 45px; border-radius: 10px;">
+                        <input type="password" id="current_password" class="form-control" style="background: transparent; border: 1px solid var(--tblr-border-color); height: 45px; border-radius: 10px;">
                     </div>
                     <div class="mb-3">
                         <label class="form-label small text-muted text-uppercase">Nova Senha</label>
-                        <input type="password" class="form-control" style="background: transparent; border: 1px solid var(--tblr-border-color); height: 45px; border-radius: 10px;">
+                        <input type="password" id="new_password" class="form-control" style="background: transparent; border: 1px solid var(--tblr-border-color); height: 45px; border-radius: 10px;">
                     </div>
                     <div class="mb-4">
                         <label class="form-label small text-muted text-uppercase">Repetir Nova Senha</label>
-                        <input type="password" class="form-control" style="background: transparent; border: 1px solid var(--tblr-border-color); height: 45px; border-radius: 10px;">
+                        <input type="password" id="confirm_password" class="form-control" style="background: transparent; border: 1px solid var(--tblr-border-color); height: 45px; border-radius: 10px;">
                     </div>
-                    <button class="btn btn-outline-success w-100 py-2 border-2" style="border-radius: 10px; font-weight: 600; height: 45px;">
+                    <button class="btn btn-outline-success w-100 py-2 border-2" id="btn-update-password" style="border-radius: 10px; font-weight: 600; height: 45px;">
                         Atualizar Senha
                     </button>
                 </div>
@@ -77,16 +77,3 @@
     </div>
 </div>
 
-<style>
-    /* Garante que os inputs fiquem visíveis ao focar no Dark Mode */
-    .form-control:focus {
-        border-color: var(--tblr-success) !important;
-        box-shadow: 0 0 0 0.25rem rgba(var(--tblr-success-rgb), .15);
-        background: transparent;
-    }
-    
-    /* Ajuste de cor do texto no Dark Mode */
-    [data-bs-theme="dark"] .form-control {
-        color: #fff;
-    }
-</style>

@@ -1,0 +1,175 @@
+:root {
+    --brand-green: #32ba3c;
+    --brand-glow: 0 0 15px rgba(50, 186, 60, 0.5);
+    /* Sobrescrevendo a variável do Tabler com !important */
+    --tblr-font-sans-serif: 'Rajdhani', sans-serif !important;
+}
+
+/* Forçar em todos os elementos base do Tabler */
+body, 
+.page, 
+.card, 
+.nav-link, 
+button {
+    font-family: 'Rajdhani', sans-serif !important;
+}
+
+/* Efeito Neon no Logo - Especificidade reforçada */
+.brand-orbitron {
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(50, 186, 60, 0.6);
+    animation: pulse-glow 3s infinite alternate;
+}
+
+/* Títulos de Categoria e Botões também precisam da Orbitron */
+.category-title, 
+.btn-start, 
+.btn-continue,
+.meta {
+    font-family: 'Orbitron', sans-serif !important;
+}
+
+/* Efeito Neon no Logo */
+.brand-orbitron {
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(50, 186, 60, 0.6);
+    animation: pulse-glow 3s infinite alternate;
+}
+
+@keyframes pulse-glow {
+    from { text-shadow: 0 0 5px rgba(50, 186, 60, 0.4); }
+    to { text-shadow: 0 0 15px rgba(50, 186, 60, 0.8); }
+}
+
+/* Cards com Glow */
+.workout-category {
+    border: 1px solid var(--tblr-border-color);
+    border-radius: 12px !important;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--tblr-bg-surface);
+    transition: transform 0.2s;
+}
+
+.workout-category:hover {
+    transform: translateY(-3px);
+}
+
+.category-header {
+    background-color: var(--brand-green);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Glow no cabeçalho do card */
+    box-shadow: 0 4px 12px rgba(50, 186, 60, 0.25);
+}
+
+.category-title {
+    color: white;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 0.85rem;
+    margin: 0;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Botão Iniciar com Glow */
+.btn-start {
+    background: white;
+    color: var(--brand-green);
+    border: none;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 0.65rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.btn-start:hover {
+    background: white;
+    color: var(--brand-green);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.exercise-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--tblr-border-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.exercise-item:last-child {
+    border-bottom: none;
+}
+
+.meta {
+    color: var(--tblr-secondary);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+/* Estilo para o Título da Página */
+.page-title-glow {
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--tblr-body-color), var(--brand-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Novas Cores para os Botões */
+.btn-start { background: #fff; color: var(--brand-green); } /* Verde original */
+.btn-continue { background: #fff; color: #f59f00; } /* Laranja/Amarelo */
+.btn-done { background: #616876 !important; color: white !important; cursor: default; box-shadow: none !important; } /* Cinza */
+
+/* Efeito de Raio de Luz (Shimmer) */
+.shimmer-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmer-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: rotate(30deg);
+    transition: none;
+    animation: light-ray 3s infinite;
+}
+
+@keyframes light-ray {
+    0% { left: -60%; }
+    20% { left: 120%; }
+    100% { left: 120%; }
+}
+
+/* Ajustes específicos para as cores dos botões hover */
+.btn-continue:hover {
+    color: #f59f00;
+    box-shadow: 0 0 20px rgba(245, 159, 0, 0.4);
+}
+
+.hover-glow:hover .meta {
+    color: var(--brand-green) !important;
+    opacity: 1;
+    text-shadow: 0 0 8px var(--brand-green);
+}
+
+.hover-glow:hover svg {
+    filter: drop-shadow(0 0 5px var(--brand-green));
+    transform: translateX(-3px); /* Pequeno movimento para a esquerda */
+    transition: all 0.2s ease;
+}

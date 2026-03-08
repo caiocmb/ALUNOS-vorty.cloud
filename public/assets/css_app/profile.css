@@ -1,0 +1,11 @@
+    /* Garante que os inputs fiquem visíveis ao focar no Dark Mode */
+    .form-control:focus {
+        border-color: var(--tblr-success) !important;
+        box-shadow: 0 0 0 0.25rem rgba(var(--tblr-success-rgb), .15);
+        background: transparent;
+    }
+    
+    /* Ajuste de cor do texto no Dark Mode */
+    [data-bs-theme="dark"] .form-control {
+        color: #fff;
+    }
