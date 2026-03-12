@@ -7,15 +7,16 @@ use App\Middleware\Authenticator;
 
 class TrainingController extends Controller {
 
-    public $model;
+    public $model,$listar;
 
     public function __construct() {
         Authenticator::handle();
         $this->model = new TrainingModel;
     }
 
-    public function index() {        
-        $this->view('training', []);
+    public function index() { 
+        $listar = $this->model->ListTraining();       
+        $this->view('training', ['listar' => $listar]);
     }
 
     

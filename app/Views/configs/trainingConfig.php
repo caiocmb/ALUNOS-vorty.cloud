@@ -7,4 +7,5 @@ $css_config = [
 
 // arquivos JS
 $js_config = [
+    'training.js'
     ];
