@@ -82,8 +82,8 @@ class ApiServices {
         $data = json_decode($res, true);
         curl_close($ch);
 
-        if (isset($data['token'])) {
-            $_SESSION['user_token'] = $data['token'];
+        if (isset($data['data']['token'])) {
+            $_SESSION['user_token'] = $data['data']['token'];
             $_SESSION['user_id'] = $data['data']['uid'];
             $_SESSION['user_name'] = ($data['data']['social_name']) ?? (strtok($data['data']['name'], " "));
             $_SESSION['user_status'] = $data['data']['status'];

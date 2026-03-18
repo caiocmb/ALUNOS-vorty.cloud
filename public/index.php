@@ -42,4 +42,10 @@ if (!file_exists($config_file)) {
 Env::load(__DIR__ . '/../.env'); // carrega as variaveis do sistema
 Env::load($config_file); // carrega as variaveis da academia
 
+if($_ENV['APP_DEBUG'] === 'true') {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+}
+
 Router::dispatch();
