@@ -36,11 +36,6 @@ class ProfileController extends Controller {
         if (isset($_FILES['user_photo']) && $_FILES['user_photo']['error'] === UPLOAD_ERR_OK) {
             $file = $_FILES['user_photo'];
             $tmpPath = $file['tmp_name'];
-
-            if ($file) {
-                $this->json(['status' => 'error', 'message' => 'Formato não suportado.']);
-                return;
-            }
             
             $info = getimagesize($tmpPath);
             if (!$info) {
