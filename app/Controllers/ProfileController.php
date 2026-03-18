@@ -72,7 +72,7 @@ class ProfileController extends Controller {
             }
             // -----------------------------------------
 
-            $novoNome = "profile_" . $userId . ".webp";
+            $novoNome = "profile_" . $userId . "_" . time() . ".webp";
             $destinoCompleto = $storagePath . $novoNome;
 
             imagepalettetotruecolor($img);
