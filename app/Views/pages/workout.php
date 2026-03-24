@@ -496,8 +496,14 @@ const app = {
 
         const row = `
         <div class="set-row">
-            <div class="orbitron text-muted small set-number" onmousedown="app.startLongPress(this, ${exId})" ontouchstart="app.startLongPress(this, ${exId})">
-                 S${num}
+            <div class="orbitron text-muted small set-number" 
+                onmousedown="app.startLongPress(this, ${exId})" 
+                onmouseup="app.cancelLongPress()" 
+                onmouseleave="app.cancelLongPress()"
+                ontouchstart="app.startLongPress(this, ${exId})" 
+                ontouchend="app.cancelLongPress()"
+                ontouchmove="app.cancelLongPress()">
+                S${num}
             </div>
             <input type="number" class="input-gym" placeholder="Kg" value="${peso}" ${isReadOnly}>
             <input type="number" class="input-gym" placeholder="Reps" value="${reps}" ${isReadOnly}>
@@ -555,8 +561,12 @@ const app = {
     
 
     startLongPress(element, exId) {
+        // 1. Limpa qualquer timer residual por segurança
+        this.cancelLongPress();
+
         this.longPressTimer = setTimeout(async () => {
             if (navigator.vibrate) navigator.vibrate(100);
+            
             const $row = $(element).closest('.set-row');
             const $exBlock = $row.closest('.exercise-block');
             const $list = $exBlock.find('.sets-list');
@@ -566,10 +576,12 @@ const app = {
             const res = await this.callAPI('delete_set', { ex_id: exId, serie: numSerie, xp_valor: xpValor });
             
             if (res.success) {
-                this.totalXP = parseInt(res.novo_total ?? res.novo_xp) ?? this.totalXP;
-
-                console.log("AAAAAAA: "+ res.novo_total)
-                this.updateXPDisplay();
+                // Usando a Coalescência Nula para aceitar o ZERO
+                const novoXP = res.novo_total ?? res.novo_xp;
+                if (novoXP !== undefined) {
+                    this.totalXP = parseInt(novoXP);
+                    this.updateXPDisplay();
+                }
 
                 $row.fadeOut(300, async () => {
                     $row.remove();
@@ -584,7 +596,14 @@ const app = {
                     this.showToast("Série removida", "info");
                 });
             }
-        }, 1000);
+        }, 1000); // 1 segundo segurando
+    },
+
+    cancelLongPress() {
+        if (this.longPressTimer) {
+            clearTimeout(this.longPressTimer);
+            this.longPressTimer = null;
+        }
     },
 
     updateXPDisplay() {
@@ -593,7 +612,7 @@ const app = {
         setTimeout(() => $('#xp-bar').removeClass('xp-flash'), 600);
     },
 
-    cancelLongPress() { clearTimeout(this.longPressTimer); },
+    
 
     finishWorkout() {
         Swal.fire({
