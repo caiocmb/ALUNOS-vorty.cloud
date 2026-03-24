@@ -20,7 +20,10 @@
         body,.page,.card,.nav-link {
             font-family: 'Rajdhani', sans-serif !important;
             padding-top: calc(var(--top-bar-h) + 52px);
-            padding-bottom: 100px;            
+            padding-bottom: 100px;    
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none;     /* IE 10 e Edge */
+            user-select: none;        
         }
 
         .orbitron { font-family: 'Orbitron', sans-serif !important; text-transform: uppercase; }
