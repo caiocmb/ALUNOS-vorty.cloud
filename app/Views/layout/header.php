@@ -31,8 +31,8 @@
             <div class="container-xl">
                 <h1 class="navbar-brand ">
                     <a href="/home/">
-                        <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_DARK'] ?>" alt="Power Liffe" class="navbar-brand-image logo-light">                        
-                        <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_LIGHT'] ?>" alt="Power Liffe" class="navbar-brand-image logo-dark">
+                        <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_DARK'] ?>" class="navbar-brand-image logo-light">                        
+                        <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_LIGHT'] ?>" class="navbar-brand-image logo-dark">
                     </a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">

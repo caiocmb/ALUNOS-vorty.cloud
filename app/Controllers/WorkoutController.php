@@ -16,7 +16,7 @@ class WorkoutController extends Controller {
 
     public function index() { 
         $listar = $this->model->ListTraining();       
-        $this->view('workout', ['listar' => $listar],false,false);
+        $this->view('workout', ['listar' => $listar],false,true);
     }
 
     public function api() {

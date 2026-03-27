@@ -30,10 +30,11 @@
 
         .top-fixed-bar {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--top-bar-h);
-            background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(15px);
+            /*background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(15px);*/
+            background: var(--tblr-bg-surface);
             border-bottom: 2px solid var(--brand-green);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            padding: 0 15px; z-index: 1000; 
         }
 
         #main-clock { font-size: 1.5rem; color: var(--brand-green); text-shadow: var(--neon-shadow); }
@@ -56,8 +57,22 @@
             margin-bottom: 10px;
         }
 
+        /* DARK (mantém como está) */
+        [data-bs-theme="dark"] .input-gym {
+            background: #000;
+            border: 1px solid #333;
+            color: var(--brand-green);
+        }
+
+        /* LIGHT (cinza) */
+        [data-bs-theme="light"] .input-gym {
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            color: #000;
+        }
+
         .input-gym {
-            width: 100%; background: #000; border: 1px solid #333; color: var(--brand-green);
+            width: 100%; 
             padding: 10px; border-radius: 10px; text-align: center;
             font-family: 'Orbitron'; font-size: 0.85rem; outline: none; transition: 0.3s;
         }
@@ -65,9 +80,26 @@
         .input-gym:focus { border-color: var(--brand-green); box-shadow: var(--neon-shadow); }
 
         .history-col {
-            font-size: 0.65rem; color: #888; text-align: center;
-            font-family: 'Orbitron'; background: #111; padding: 5px; border-radius: 8px;
-            border: 1px solid #222; line-height: 1.2;
+            font-size: 0.65rem;
+            text-align: center;
+            font-family: 'Orbitron';
+            padding: 5px;
+            border-radius: 8px;
+            line-height: 1.2;
+        }
+
+        /* DARK */
+        [data-bs-theme="dark"] .history-col {
+            background: #111;
+            border: 1px solid #222;
+            color: #888;
+        }
+
+        /* LIGHT */
+        [data-bs-theme="light"] .history-col {
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            color: #555;
         }
         .history-val { color: var(--brand-green); display: block; font-size: 0.63rem; }
 
@@ -150,8 +182,9 @@
             left: 0;
             width: 100%;
             height: 35px;
-            background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(10,10,10,0.9) 50%, rgba(0,0,0,1) 100%);
-            border-bottom: 1px solid rgba(50, 186, 60, 0.4);
+            /*background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(10,10,10,0.9) 50%, rgba(0,0,0,1) 100%);*/
+            background: var(--tblr-bg-surface);
+            border-bottom: 1px solid var(--brand-green);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -191,7 +224,6 @@
             font-family: 'Orbitron', sans-serif !important;
             font-size: 1.1rem;
             font-weight: 800;
-            color: #fff;
             text-shadow: 0 0 8px var(--brand-green);
         }
 
@@ -225,39 +257,68 @@
             padding: 40px; background: #0a0a0a; box-shadow: var(--neon-shadow);
         }
 
-        /* Customização do SweetAlert para o Tema Dark/Neon */
+        /* POPUP */
         .swal2-popup.my-swal-custom {
-            border: 2px solid var(--brand-green) !important;
-            border-radius: 20px !important;
-            box-shadow: 0 0 20px rgba(50, 186, 60, 0.2) !important;
-            padding: 2rem !important;
+            border: 1px solid var(--tblr-border-color) !important;
+            border-radius: 14px !important;
+            background: var(--tblr-bg-surface) !important;
+            padding: 1.5rem !important;
         }
 
+        /* TÍTULO */
         .swal2-title.my-swal-title {
             font-family: 'Orbitron', sans-serif !important;
-            letter-spacing: 2px;
-            font-size: 1.5rem !important;
+            font-size: 1.3rem !important;
+            color: var(--tblr-body-color) !important;
         }
 
+        /* CONTEÚDO */
         .swal2-html-container.my-swal-content {
             font-family: 'Inter', sans-serif !important;
-            color: #a0a0a0 !important;
+            color: var(--tblr-body-color) !important;
         }
 
-        /* Ajuste nos botões do Modal */
-        .swal2-confirm.btn-confirm-custom {
-            font-family: 'Orbitron', sans-serif !important;
+        /* CONTAINER DOS BOTÕES (CORREÇÃO DO AGRUPAMENTO) */
+        .swal2-actions {
+            width: 100% !important;
+            display: flex !important;
+            gap: 10px !important;
+            justify-content: center !important;
+            margin-top: 1.5rem !important;
+        }
+
+        /* BOTÕES BASE */
+        .swal2-confirm,
+        .swal2-cancel {
+            flex: 1 !important;
+            max-width: 160px;
             border-radius: 10px !important;
-            padding: 10px 25px !important;
+            padding: 10px !important;
+            font-family: 'Orbitron', sans-serif !important;
             font-weight: bold !important;
         }
 
+        /* CONFIRMAR */
+        .swal2-confirm.btn-confirm-custom {
+            background: var(--brand-green) !important;
+            border: none !important;
+            color: #fff !important;
+        }
+
+        /* CANCELAR */
         .swal2-cancel.btn-cancel-custom {
-            font-family: 'Orbitron', sans-serif !important;
-            background: transparent !important;
-            color: #6c757d !important;
-            border: 1px solid #333 !important;
-            border-radius: 10px !important;
+            background: var(--tblr-bg-surface-secondary) !important;
+
+            border: 1px solid var(--tblr-border-color) !important;
+        }
+
+        /* HOVER */
+        .swal2-confirm:hover {
+            filter: brightness(1.1);
+        }
+
+        .swal2-cancel:hover {
+            background: var(--tblr-bg-surface-tertiary) !important;
         }
 
         .pulse-neon {
@@ -290,7 +351,7 @@
 
 <div class="top-fixed-bar">
     <div class="d-flex align-items-center gap-3">
-        <a href="javascript:history.back()" class="text-white"><i class="fas fa-chevron-left fa-lg"></i></a>
+        <a href="javascript:history.back()" class="text-body"><i class="fas fa-chevron-left fa-lg"></i></a>
         <div>
             <label class="text-muted d-block orbitron" style="font-size: 0.55rem; letter-spacing: 2px;">TREINO ATIVO</label>
             <span id="main-clock" class="orbitron fw-bold">00:00:00</span>
@@ -316,11 +377,11 @@
 <div id="finish-overlay">
     <div class="summary-card">
         <h1 class="orbitron text-success mb-0">MISSÃO CUMPRIDA</h1>
-        <p class="text-muted small mb-4">Relatório de Desempenho</p>
+        <p class=" small mb-4">Relatório de Desempenho</p>
         
         <div class="mb-4">
-            <span class="text-muted d-block orbitron" style="font-size: 0.7rem;">XP TOTAL GANHO</span>
-            <span id="total-xp-display" class="orbitron display-2 text-white" style="text-shadow: var(--neon-shadow);">0</span>
+            <span class=" d-block orbitron" style="font-size: 0.7rem;">XP TOTAL GANHO</span>
+            <span id="total-xp-display" class="orbitron display-2 " style="text-shadow: var(--neon-shadow);">0</span>
         </div>
 
         <div class="d-grid gap-3">
@@ -334,7 +395,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/assets/js_app/theme.js"></script>
 
 <script>
 const TreinoService = {
@@ -617,20 +677,23 @@ const app = {
     finishWorkout() {
         Swal.fire({
             title: 'FINALIZAR TREINO?',
-            text: "O progresso será salvo e este log será fechado.",
+            text: "O progresso será salvo e este treino será finalizado.",
             icon: 'warning',
             iconColor: '#32ba3c',
             showCancelButton: true,
-            confirmButtonText: 'CONCLUIR MISSÃO',
+            confirmButtonText: 'CONCLUIR',
             cancelButtonText: 'AINDA NÃO',
-            background: '#0a0a0a',
-            color: '#ffffff',
+          
+           
             customClass: {
-                popup: 'my-swal-custom',
-                confirmButton: 'swal2-confirm btn-confirm-custom',
-                cancelButton: 'swal2-cancel btn-cancel-custom'
-            },
-            buttonsStyling: false,
+    popup: 'my-swal-custom',
+    title: 'my-swal-title',
+    htmlContainer: 'my-swal-content',
+    confirmButton: 'btn-confirm-custom',
+    cancelButton: 'btn-cancel-custom',
+    actions: 'my-swal-actions'
+},
+buttonsStyling: false
         }).then((result) => {
             if (result.isConfirmed) {
                 const tempoFinal = $('#main-clock').text();
@@ -667,5 +730,3 @@ const app = {
 
 $(document).ready(() => app.init());
 </script>
-</body>
-</html>
