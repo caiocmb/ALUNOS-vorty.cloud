@@ -48,4 +48,7 @@ if($_ENV['APP_DEBUG'] === 'true') {
     ini_set('display_startup_errors', 1);
 }
 
+// define o timezone para evitar erros relacionados a data/hora
+date_default_timezone_set('America/Sao_Paulo');
+
 Router::dispatch();

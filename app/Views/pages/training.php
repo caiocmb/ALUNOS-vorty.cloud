@@ -72,7 +72,7 @@
                                     <h2 class="fw-bold mb-0 text-uppercase border-start border-4 ps-3 training-title">
                                         <?= $treino['titulo']; ?>
                                     </h2>
-                                    <a href="/workout/" class="btn btn-sm fw-bold shimmer-effect training-button-iniciar">
+                                    <a href="/workout/<?= $treino['id']; ?>" class="btn btn-sm fw-bold shimmer-effect training-button-<?= $treino['acao'] == 'Continuar' ? 'continuar' : 'iniciar' ?>">
                                         <?= $treino['acao']; ?>
                                     </a>
                                 </div>

@@ -14,11 +14,95 @@ class WorkoutController extends Controller {
         $this->model = new WorkoutModel;
     }
 
-    public function index() { 
-        $listar = $this->model->ListTraining();       
-        $this->view('workout', ['listar' => $listar],false,true);
+    public function index() {      
+        $this->view('workout', [], false,true);
     }
 
+    public function api($id = null) {
+        $action = $_REQUEST['action'] ?? '';
+
+        switch ($action) {
+            // lista o treino do dia
+            case 'get_active_workout':
+                $data = $this->model->GetActiveWorkout($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+            // busca o historico de cada exercicio    
+            case 'get_exercise_history':
+                $data = $this->model->GetExerciseHistory($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+            // busca o que foi feito no treino de hoje para cada exercicio
+            case 'get_today_sets':
+                $data = $this->model->GetTodaySets($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+            // grava as series feitas no treino
+            case 'save_set':
+                $data = $this->model->SaveSet($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+            // quando adiciona uma nova serie em branco, replica no banco para ser espelho da aplicação
+            case 'add_set':
+                // aqui tem que ser um post para criar a serie e pegar o id dela, para depois atualizar com peso e reps
+                $data = $this->model->AddSet($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+            case 'uncheck_set':
+                // aqui tem que ser um post para criar a serie e pegar o id dela, para depois atualizar com peso e reps
+                $data = $this->model->UncheckSet($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+            case 'delete_set':
+                // aqui tem que ser um post para criar a serie e pegar o id dela, para depois atualizar com peso e reps
+                $data = $this->model->DeleteSet($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+            case 'finish_workout':
+                // aqui tem que ser um post para criar a serie e pegar o id dela, para depois atualizar com peso e reps
+                $data = $this->model->FinishWorkout($id);
+                if (isset($data['status']) && $data['status'] == 'error') {
+                    return $this->json(['success' => false, 'message' => $data['message']], 500);
+                }
+                return $this->json($data['data']);
+                break;
+           /* case 'save_set':
+                return $this->saveSet();
+
+            case 'delete_set':
+                return $this->deleteSet();
+
+            case 'finish_workout':
+                return $this->finishWorkout();*/
+
+            default:
+                return $this->json(['success' => false, 'message' => 'Ação inválida'], 400);
+        }
+    }
+
+
+    /*
     public function api() {
 
         $action = $_REQUEST['action'] ?? '';
@@ -52,8 +136,9 @@ class WorkoutController extends Controller {
 
         // MOCK de Histórico Anterior
         $mockHistoricoDB = [
-            101 => [['peso' => '200', 'reps' => '12'], ['peso' => '20', 'reps' => '12']],
-            102 => [['peso' => '40', 'reps' => '10'], ['peso' => '42', 'reps' => '8']]
+            101 => [['peso' => '200', 'und' => 'kg', 'reps' => '12'], ['peso' => '20', 'und' => 'kg', 'reps' => '12']],
+            102 => [['peso' => '40', 'und' => 'kg', 'reps' => '10'], ['peso' => '42', 'und' => 'kg', 'reps' => '8']],
+            103 => [['peso' => '32', 'und' => 'min', 'reps' => '1']]
         ];
 
         switch ($action) {
@@ -70,8 +155,33 @@ class WorkoutController extends Controller {
                     'data_inicio' => $storage['start_time'], 
                     'usuario_xp' => $storage['usuario_xp'], // PUXA DO JSON
                     'exercicios' => [
-                        ['id' => 101, 'nome' => "Stiff Unilateral", 'protocolo' => "3x 12", 'xp' => 10],
-                        ['id' => 102, 'nome' => "Mesa Flexora", 'protocolo' => "4x 10", 'xp' => 10]
+                        [
+                            'id' => 101, 
+                            'nome' => "Stiff Unilateral", 
+                            'protocolo' => "3x 12", 
+                            'xp' => 10, 
+                            'rest' => 45, 
+                            'und' => 'kg',
+                            'img' => 'https://gym.vorty.cloud/dist/img/exercises/678a90bce8d69.webp'
+                        ],
+                        [
+                            'id' => 102, 
+                            'nome' => "Mesa Flexora", 
+                            'protocolo' => "4x 10", 
+                            'xp' => 10, 
+                            'rest' => 60, 
+                            'und' => 'kg',
+                            'img' => 'https://gym.vorty.cloud/dist/img/exercises/678a94ac0f573.webp'
+                        ],
+                        [
+                            'id' => 103, 
+                            'nome' => "Esteira", 
+                            'protocolo' => "5x", 
+                            'xp' => 2, 
+                            'rest' => 60, 
+                            'und' => 'min',
+                            'img' => null
+                        ]
                     ]
                 ]);
                 break;
@@ -97,7 +207,8 @@ class WorkoutController extends Controller {
 
                 $storage['sets'][$ex_id][] = [
                     'peso' => $_POST['peso'],
-                    'reps' => $_POST['reps']
+                    'reps' => $_POST['reps'],
+                    'und' => 'min' // aqui vou pegar do banco depois pra tratar no backend, por enquanto é fixo
                 ];
 
                 if (!$ja_pontuou) {
@@ -108,7 +219,8 @@ class WorkoutController extends Controller {
 
                 $this->json([
                     'success' => true, 
-                    'novo_xp' => $storage['usuario_xp']
+                    'novo_xp' => $storage['usuario_xp'],
+                    'rest' => 45
                 ]);
                 break;
 
@@ -134,11 +246,52 @@ class WorkoutController extends Controller {
                 break;
 
             case 'finish_workout':
-                // No finish, você pode optar por deletar o arquivo ou apenas limpar os sets
-                // Se deletar o arquivo, o XP volta a 0 no próximo treino (conforme getStorage)
-                // Se quiser manter o XP acumulado, apenas limpe ['sets'] e ['start_time']
+                // 1. Calculamos os dados finais antes de limpar o storage
+                $tonelagemTotal = 0;
+                $minutosTotal = 0;
+                $totalExercicios = 0;
+
+                if (isset($storage['sets']) && is_array($storage['sets'])) {
+                    foreach ($storage['sets'] as $ex_id => $series) {
+                        if (!empty($series)) $totalExercicios++;
+                        foreach ($series as $serie) {
+                            $p = (float)($serie['peso'] ?? 0);
+                            $r = (int)($serie['reps'] ?? 0);
+                            if($serie['und'] == 'min') {
+                                $minutosTotal += ($p * $r); // aqui o peso é na verdade os minutos
+                            } else {
+                                $tonelagemTotal += ($p * $r);
+                            }
+                        }
+                    }
+                }
+
+                // 2. Preparamos o objeto de resposta para o compartilhamento
+                $resumo = [
+                    "nome_treino" => "TREINO A - POSTERIOR E GLÚTEO A", // Nome que vem do get_active_workout
+                    "tempo"       => substr($_POST['tempo'], 0, 5) ?? '00:00',
+                    "tonelagem"   => number_format($tonelagemTotal, 0, ',', '.'),
+                    "minutos"   => number_format($minutosTotal, 0, ',', '.'),
+                    "xp_final"    => $storage['usuario_xp'] ?? 0,
+                    "usuario"     => "CAIO A", // Aqui você pode pegar da sua Session se tiver
+                    "exercicios_concluidos" => $totalExercicios
+                ];
+
+                // 3. Persistência Final (Opcional)
+                // Se você quiser que o XP acumule para o próximo treino, 
+                // em vez de unlink, você faria:
+                // $storage['sets'] = []; 
+                // $storage['start_time'] = date('Y-m-d H:i:s');
+                // saveStorage($storage);
+                
+                // Se preferir resetar tudo para o próximo teste:
                 if (file_exists($storageFile)) unlink($storageFile);
-                $this->json(['success' => true]);
+
+                // 4. Retorno para o JavaScript
+                $this->json([
+                    'success' => true,
+                    'resumo'  => $resumo
+                ]);
                 break;
 
             default:
@@ -146,5 +299,7 @@ class WorkoutController extends Controller {
                 break;
         }
     }
+
+    */
     
 }

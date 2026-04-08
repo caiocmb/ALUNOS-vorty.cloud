@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\HomeModel;
+use App\Models\HistoricalModel;
 use App\Middleware\Authenticator;
 
 class HistoricalController extends Controller {
@@ -11,11 +11,11 @@ class HistoricalController extends Controller {
 
     public function __construct() {
         Authenticator::handle();
-        $this->model = new HomeModel;
+        $this->model = new HistoricalModel;
     }
 
     public function index() {        
-        $this->view('historical', []);
+        $this->view('historical', ['resumo'=>$this->model->ListHistorical()]);
     }
     
 }

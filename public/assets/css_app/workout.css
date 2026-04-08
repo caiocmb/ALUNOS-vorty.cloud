@@ -1,0 +1,393 @@
+:root {
+            --brand-green: #32ba3c;
+            --secondary-neon: #ff0055;
+            --top-bar-h: 90px;
+            --neon-shadow: 0 0 15px rgba(50, 186, 60, 0.5);
+        }
+
+        body,.page,.card,.nav-link {
+            font-family: 'Rajdhani', sans-serif !important;
+            padding-top: calc(var(--top-bar-h) + 52px);
+            padding-bottom: 100px;    
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none;     /* IE 10 e Edge */
+            user-select: none;        
+        }
+
+        .orbitron { font-family: 'Orbitron', sans-serif !important; text-transform: uppercase; }
+
+        .top-fixed-bar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--top-bar-h);
+            /*background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(15px);*/
+            background: var(--tblr-bg-surface);
+            border-bottom: 2px solid var(--brand-green);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 15px; z-index: 1000; 
+        }
+
+        #main-clock { font-size: 1.5rem; color: var(--brand-green); text-shadow: var(--neon-shadow); }
+        .paused-clock { color: #f1c40f !important; text-shadow: 0 0 10px rgba(241, 196, 15, 0.5) !important; }
+
+        .exercise-block {
+            /*background: linear-gradient(145deg, #111, #080808);*/
+            border-radius: 20px; border: 1px solid #222;
+            padding: 18px; margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .exercise-title { border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; }
+
+        .set-row {
+            display: grid;
+            grid-template-columns: 30px 1fr 1fr 1.2fr 45px; 
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        /* DARK (mantém como está) */
+        [data-bs-theme="dark"] .input-gym {
+            background: #000;
+            border: 1px solid #333;
+            color: var(--brand-green);
+        }
+
+        /* LIGHT (cinza) */
+        [data-bs-theme="light"] .input-gym {
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            color: #000;
+        }
+
+        .input-gym {
+            width: 100%; 
+            padding: 10px; border-radius: 10px; text-align: center;
+            font-family: 'Orbitron'; font-size: 0.85rem; outline: none; transition: 0.3s;
+        }
+
+        .input-gym:focus { border-color: var(--brand-green); box-shadow: var(--neon-shadow); }
+
+        .history-col {
+            font-size: 0.65rem;
+            text-align: center;
+            font-family: 'Orbitron';
+            padding: 5px;
+            border-radius: 8px;
+            line-height: 1.2;
+        }
+
+        /* DARK */
+        [data-bs-theme="dark"] .history-col {
+            background: #111;
+            border: 1px solid #222;
+            color: #888;
+        }
+
+        /* LIGHT */
+        [data-bs-theme="light"] .history-col {
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            color: #555;
+        }
+        .history-val { color: var(--brand-green); display: block; font-size: 0.63rem; }
+
+        .btn-check {
+            cursor: pointer !important;
+            position: relative;
+            z-index: 10;
+            pointer-events: auto !important;
+        }
+
+
+        /* AJUSTE PARA O CLIQUE NÃO FALHAR */
+        .btn-check svg, .btn-check path {
+            pointer-events: none !important;
+        }
+
+        .btn-check:focus, .btn-check:active {
+            background: #151515 !important;
+            color: #444 !important;
+            border-color: #333 !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+
+        .btn-check.active {
+            background: var(--brand-green) !important;
+            color: #000 !important;
+            border-color: var(--brand-green) !important;
+            box-shadow: 0 0 15px rgba(50, 186, 60, 0.6) !important;
+        }
+
+        #pause-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; z-index: 2000;
+            flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-add-serie {
+            width: 100%; background: rgba(50, 186, 60, 0.05); border: 1px dashed var(--brand-green);
+            color: var(--brand-green); padding: 12px; border-radius: 12px;
+            text-transform: uppercase; font-weight: bold; margin-top: 10px;
+        }
+
+        #rest-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none; z-index: 3000;
+            flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--brand-green);
+        }
+
+        .timer-val-big { font-family: 'Orbitron'; font-size: 6rem; color: var(--brand-green); text-shadow: var(--neon-shadow); }
+
+        #mini-rest {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 65px; height: 65px; background: #000;
+            border: 2px solid var(--secondary-neon);
+            border-radius: 50%; display: none; align-items: center; justify-content: center;
+            font-family: 'Orbitron'; color: #fff; z-index: 3000; 
+            box-shadow: 0 0 15px var(--secondary-neon); cursor: pointer;
+        }
+
+        .set-number {
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .set-number:active {
+            color: var(--secondary-neon) !important;
+            transform: scale(1.1);
+        }
+
+        /* Barra de XP de fora a fora */
+        .xp-full-bar {
+            position: fixed;
+            top: 90px; /* Ajuste exatamente para a altura da sua top-bar preta */
+            left: 0;
+            width: 100%;
+            height: 35px;
+            /*background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(10,10,10,0.9) 50%, rgba(0,0,0,1) 100%);*/
+            background: var(--tblr-bg-surface);
+            border-bottom: 1px solid var(--brand-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 998; /* Logo abaixo da top-bar principal */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Detalhe da linha neon que atravessa a barra */
+        .xp-full-bar::before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0%; /* Isso pode ser animado via JS se você quiser uma barra de progresso real */
+            height: 2px;
+            background: var(--brand-green);
+            box-shadow: 0 0 10px var(--brand-green);
+            transition: width 0.5s ease;
+        }
+
+        .xp-label-tech {
+            font-family: 'Orbitron', sans-serif !important;
+            font-size: 0.6rem;
+            color: var(--brand-green);
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        .xp-counter-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .xp-value-large {
+            font-family: 'Orbitron', sans-serif !important;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-shadow: 0 0 8px var(--brand-green);
+        }
+
+        .xp-unit {
+            font-family: 'Orbitron', sans-serif !important;
+            font-size: 0.6rem;
+            color: var(--brand-green);
+        }
+
+        /* Animação de "Flash" na barra toda quando ganha XP */
+        .xp-flash {
+            animation: barFlash 0.6s ease-out;
+        }
+
+        @keyframes barFlash {
+            0% { background: rgba(50, 186, 60, 0.0); }
+            50% { background: rgba(50, 186, 60, 0.15); }
+            100% { background: rgba(50, 186, 60, 0.0); }
+        }
+
+        /* Overlay de Resumo Final */
+#finish-overlay {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.95); 
+    z-index: 4000;
+    display: none; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    backdrop-filter: blur(15px); 
+    text-align: center; 
+    padding: 15px; /* Padding menor para não empurrar o card no mobile */
+    box-sizing: border-box;
+}
+
+.summary-card {
+    border: 2px solid var(--brand-green);
+    border-radius: 20px;
+    background: #0a0a0a;
+    box-shadow: var(--neon-shadow);
+    
+    /* AJUSTES CRÍTICOS */
+    width: 100%;
+    max-width: 400px; /* Largura ideal para Mobile */
+    margin: 0 auto;   /* Centraliza o card no overlay */
+    padding: 30px 15px; /* Padding menor nas laterais para o celular */
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajuste para as colunas de Tempo/Carga/Cardio não espremerem demais */
+.summary-card .h4 {
+    font-size: 1.1rem; /* Diminuído levemente para não quebrar linha no mobile */
+}
+
+
+/* Garante que o grid de botões não ultrapasse o card */
+.no-export {
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+      /* POPUP PRINCIPAL */
+.swal2-popup.my-swal-custom {
+    background: #0a0a0a !important; /* Fundo Black total */
+    border: 2px solid var(--brand-green) !important; /* Borda Neon */
+    border-radius: 20px !important;
+    padding: 2rem !important;
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.2) !important;
+}
+
+/* TÍTULO (MISSÃO / AVISO) */
+.swal2-title.my-swal-title {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 1.4rem !important;
+    color: var(--brand-green) !important; /* Título sempre em Neon */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* TEXTO DE CONTEÚDO */
+.swal2-html-container.my-swal-content {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 0.9rem !important;
+    color: #ffffff !important;
+    opacity: 0.8;
+}
+
+/* CONTAINER DE BOTÕES */
+.swal2-actions {
+    width: 100% !important;
+    gap: 15px !important;
+    margin-top: 2rem !important;
+}
+
+/* BOTÃO CONFIRMAR (CONCLUIR MISSÃO) */
+.swal2-confirm.btn-confirm-custom {
+    background: var(--brand-green) !important;
+    color: #000 !important; /* Texto preto no fundo neon destaca mais */
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.4) !important;
+}
+
+/* BOTÃO CANCELAR (AINDA NÃO) */
+.swal2-cancel.btn-cancel-custom {
+    background: transparent !important;
+    color: #666 !important;
+    font-family: 'Orbitron', sans-serif !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    border: 1px solid #333 !important;
+    text-transform: uppercase;
+}
+
+/* HOVERS */
+.swal2-confirm.btn-confirm-custom:hover {
+    filter: brightness(1.2) !important;
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.6) !important;
+}
+
+.swal2-cancel.btn-cancel-custom:hover {
+    border-color: #555 !important;
+    color: #fff !important;
+}
+
+/* ÍCONES DO SWAL (SUCESSO/AVISO) */
+.swal2-icon.swal2-warning {
+    border-color: var(--brand-green) !important;
+    color: var(--brand-green) !important;
+}
+
+        .pulse-neon {
+            animation: neonGlow 0.5s ease-in-out;
+        }
+
+        @keyframes neonGlow {
+            0% { box-shadow: 0 0 10px rgba(50, 186, 60, 0.3); transform: scale(1); }
+            50% { box-shadow: 0 0 25px rgba(50, 186, 60, 0.8); transform: scale(1.1); border-color: #fff; }
+            100% { box-shadow: 0 0 10px rgba(50, 186, 60, 0.3); transform: scale(1); }
+        }
+
+        .exercise-shadow {
+            background-color: rgba(255, 255, 255, 0.02) !important; 
+            border: 1px solid rgba(var(--brand-green-rgb, 0, 255, 0), 0.2) !important; 
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 15px rgba(var(--brand-green-rgb, 0, 255, 0), 0.15);
+        }
+
+        .summary-card {
+            background: #111;
+            border: 2px solid var(--brand-green);
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.2);
+        }
+
+        /* Linha horizontal de scan que fica subindo e descendo */
+        .summary-card::after {
+            content: " ";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }

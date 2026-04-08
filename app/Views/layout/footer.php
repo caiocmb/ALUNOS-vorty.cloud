@@ -5,9 +5,10 @@
                         <ul class="list-inline list-inline-dots mb-0">
                           <li class="list-inline-item"><?= $_ENV['COMPANY_NAME']; ?></li> 
                           <?php 
-                          $path = trim($_SERVER['REQUEST_URI'], '/');
-                          $pagina = basename($path);
-                          if($pagina == 'workout') {
+                          $path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+                          $parts = explode('/', $path);
+
+                          if (in_array('workout', $parts)) {
                           ?>
                           <li class="list-inline-item">
                             <button class="btn btn-icon px-2" onclick="toggleTheme()" id="themeBtn"></button>

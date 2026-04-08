@@ -1,3 +1,12 @@
+<?php 
+
+if(!isset($resumo['data']) && empty($resumo['data'])){
+    echo "<div class='alert alert-danger '>Nenhum dado disponível. <a href='/home' class='alert-link'>Voltar</a></div>";
+    return;
+}
+
+$dados = $resumo['data'];
+?>
 <div class="container-tight py-4" style="max-width: 550px; margin: 0 auto;">
 
     <div class="d-flex align-items-center justify-content-between mb-4 px-2">
@@ -13,35 +22,95 @@
         
         <div class="card-body p-4 text-center position-relative">
             <div class="text-white-50 small text-uppercase mb-2 brand-orbitron" style="font-size: 0.7rem;">Pontuação Acumulada</div>
-            <div class="display-4 font-weight-bold text-white mb-2 counter-up">2.450</div>
-            
+            <?php
+            // aqui precisa validar se o XP existe, se não existir, consideramos 0 para evitar erros
+            if (!isset($dados['xp_total'])) {
+                $dados['xp_total'] = 0;
+            }
+
+            $xp = (int)$dados['xp_total'];
+
+            // 1. Definimos o "teto" das barras baseado no XP
+            // Se o XP for 10, o teto é baixo. Se for 2500+, o teto é 100.
+            // A fórmula abaixo garante que o teto suba, mas nunca ultrapasse 100.
+            $teto_maximo = min(100, 40 + ($xp / 50)); 
+
+            // 2. Função rápida para gerar a altura randômica dentro do limite
+            function gerarAltura($teto) {
+                // Sempre acima de 30%, e no máximo o teto calculado pelo XP
+                return rand(30, max(31, $teto));
+            }
+            ?>
+
+            <div class="display-4 font-weight-bold text-white mb-2 counter-up"><?= $xp ?> <small class="text-success">XP</small></div>
+
             <div class="d-flex align-items-end justify-content-center gap-1 mt-3" style="height: 40px;">
-                <div class="bg-success rounded-top bar-anim" style="width: 6px; --h: 40%;"></div>
-                <div class="bg-success rounded-top bar-anim" style="width: 6px; --h: 70%;"></div>
-                <div class="bg-success rounded-top bar-anim" style="width: 6px; --h: 50%;"></div>
-                <div class="bg-success rounded-top bar-anim" style="width: 6px; --h: 90%;"></div>
-                <div class="bg-white-50 rounded-top bar-anim" style="width: 6px; --h: 30%;"></div>
-                <div class="bg-success rounded-top bar-anim" style="width: 6px; --h: 100%;"></div>
-                <div class="bg-success rounded-top bar-anim" style="width: 6px; --h: 80%;"></div>
+                <?php 
+                // Criamos as 7 barras com a lógica randômica baseada no XP
+                for ($i = 0; $i < 7; $i++): 
+                    $h = gerarAltura($teto_maximo);
+                
+                ?>
+                    <div class="bg-success rounded-top bar-anim" 
+                        style="width: 6px; --h: <?= $h ?>%; height: <?= $h ?>%; transition: height 0.3s ease;">
+                    </div>
+                <?php endfor; ?>
             </div>
         </div>
     </div>
 
     <div class="space-y-3 px-1">
-        <?php for ($i = 1; $i <= 3; $i++): ?>
+        <?php 
+        // aqui se nao existe historico, exibe uma mensagem amigavel
+        if (empty($dados['treinos'])) {
+            echo "<div class='alert alert-info'>Nenhum registro encontrado. <a href='/home' class='alert-link'>Voltar</a></div>";
+            return;
+        }
+
+        foreach ($dados['treinos'] as $key => $value) { 
+        $data_bruta = $value['initial_date'];
+        $date = new DateTime($data_bruta);
+
+        // 1. Pegar apenas o dia
+        $dia = $date->format('d');
+
+        // 2. Pegar o mês abreviado (Tradução manual para garantir 100% o PT-BR)
+        $meses = [
+            1 => 'JAN', 2 => 'FEV', 3 => 'MAR', 4 => 'ABR', 5 => 'MAI', 6 => 'JUN',
+            7 => 'JUL', 8 => 'AGO', 9 => 'SET', 10 => 'OUT', 11 => 'NOV', 12 => 'DEZ'
+        ];
+        $mes_num = (int)$date->format('m');
+        $mes_abrev = $meses[$mes_num];  
+
+        $div_xp = "<div class=\"text-success small font-weight-bold\">🔥 +".$value['xp']." XP Conquistados</div>";
+        $saldoio = '';
+        // se o nome do treino for 'XP_IO_S' deve gerar um card generico, para mostrar que foi retirado o valor de XP (tipo um extrato bancario), da mesma forma para o 'XP_IO_E', s´que esse é uma entrada de saldo.
+        if($value['name_training'] == 'XP_IO_S'){     
+            $saldoio = 'S';      
+            $value['name_training'] = 'XP Retirado';           
+            $div_xp = "<div class=\"text-danger small font-weight-bold\"> -".$value['xp']." XP retirados</div>";        
+        } elseif($value['name_training'] == 'XP_IO_E'){
+            $saldoio = 'S';  
+            $value['name_training'] = 'XP Adquirido';
+            $div_xp = "<div class=\"text-success small font-weight-bold\"> +".$value['xp']." XP recebidos</div>";
+        }
+
+        // aqui para baixo deve gerar o card em html para impressão caso for os 2 casos acima        
+        ?>       
+
         <div class="training-card shadow-sm animate-in-up" style="animation-delay: <?= $i * 0.1 ?>s;" onclick="this.classList.toggle('expanded')">
             <div class="card-body p-3">
                 
                 <div class="row align-items-center g-3">
                     <div class="col-auto">
                         <div class="text-center p-2 rounded-3 date-box">
-                            <div class="small text-muted text-uppercase" style="font-size: 0.6rem;">Fev</div>
-                            <div class="h3 m-0">2<?= $i ?></div>
+                            <div class="small text-muted text-uppercase" style="font-size: 0.6rem;"><?= $mes_abrev ?></div>
+                            <div class="h3 m-0"><?= $dia ?></div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="font-weight-bold h4 mb-0 text-uppercase brand-orbitron">Treino <?= ['A', 'B', 'C'][$i % 3] ?></div>
-                        <div class="text-success small font-weight-bold">🔥 +25 XP Conquistados</div>
+                        <div class="font-weight-bold h4 mb-0 text-uppercase brand-orbitron"><?= $value['name_training'] ?></div>
+                        <?= $div_xp ?>
                     </div>
                     <div class="col-auto text-muted">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="chevron-icon"><path d="M6 9l6 6 6-6"/></svg>
@@ -50,15 +119,29 @@
 
                 <div class="expandable-content mt-3 pt-3 border-top border-dashed">
                     
+                    <?php 
+                    if($saldoio == 'S'){
+                       echo "<div class='alert alert-info'>".$value['obs']."</div>";
+                    }
+
+                    foreach ($value['exercises'] as $key => $ex) 
+                    {  
+                        $dados_limpos = array_filter(array_map('array_filter', $ex['executions'])); // Remove execuções vazias
+
+                        if(empty($dados_limpos)){
+                            continue; // Pula exercícios sem execuções válidas
+                        }
+                        
+                    ?>
                     <div class="exercise-session p-2 rounded-3 mb-3" style="background: rgba(255,255,255,0.02);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div class="d-flex align-items-center gap-2">
                                 <div class="bg-success-lt p-1 rounded">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-success" fill="currentColor" viewBox="0 0 16 16"><path d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8m10.354-3.646a.5.5 0 0 0-.708 0L7 8.293 5.354 6.646a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708"/></svg>
                                 </div>
-                                <span class="font-weight-bold brand-orbitron" style="font-size: 0.8rem;">STIFF UNILATERAL</span>
+                                <span class="font-weight-bold brand-orbitron" style="font-size: 0.8rem;"><?= $ex['name_exercise'] ?></span>
                             </div>
-                            <span class="text-muted extra-small">Meta: 3x 12 a 15</span>
+                            <span class="text-muted extra-small">Meta: <?= $ex['meta'] ?></span>
                         </div>
 
                         <div class="table-responsive">
@@ -66,38 +149,40 @@
                                 <thead>
                                     <tr class="text-muted extra-small uppercase">
                                         <th style="width: 20%;">Série</th>
-                                        <th class="text-center">Prescrito</th>
-                                        <th class="text-end">Realizado</th>
+                                        <th class="text-center">Peso/Tempo</th>
+                                        <th class="text-end">Reps</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php 
+                                    foreach ($ex['executions'] as $key => $set) 
+                                    {
+                                    ?>
                                     <tr>
-                                        <td><span class="badge">S1</span></td>
-                                        <td class="text-center text-muted small">12-15 reps</td>
-                                        <td class="text-end">
-                                            <span class="text-success font-weight-bold">10kg</span> / <strong>12 reps</strong>
-                                        </td>
+                                        <td><span class="badge">S<?= $set['serie'] ?></span></td>
+                                        <td class="text-center small"><?= $set['peso'].' '.$ex['unit'] ?></td>
+                                        <td class="text-center small"><?= $set['reps'] ?> reps</td>
                                     </tr>
-                                    <tr>
-                                        <td><span class="badge">S2</span></td>
-                                        <td class="text-center text-muted small">12-15 reps</td>
-                                        <td class="text-end">
-                                            <span class="text-success font-weight-bold">12kg</span> / <strong>12 reps</strong>
-                                        </td>
-                                    </tr>
+                                    <?php } ?>                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
+                    <?php } 
+                    
+                    if($saldoio <> 'S'){                  
+                    ?>
+                    
                     <div class="d-flex justify-content-between align-items-center mt-3 p-2 bg-dark-lt rounded-2">
                         <span class="extra-small text-muted">Esforço Total</span>
-                        <span class="font-weight-bold text-success" style="font-size: 0.75rem;">1.420 kg Movimentados</span>
+                        <span class="font-weight-bold text-success" style="font-size: 0.75rem;">CARGA: <?= $value['total_load'] ?> KG</span>
+                        <span class="font-weight-bold text-success" style="font-size: 0.75rem;">CARDIO: <?= $value['total_minutes'] ?> MIN</span>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
-        <?php endfor; ?>
+        <?php } ?>
     </div>
 </div>
 
