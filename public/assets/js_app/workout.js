@@ -1,3 +1,10 @@
+// Quando a página carrega, injetamos um estado novo no histórico
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    // Se o usuário clicar em "Voltar", redirecionamos para a pagina anterior
+    window.location.href = "/training";
+};
+
 const modalExercicio = document.getElementById('modal-exercicio');
 
 if (modalExercicio) {
@@ -234,7 +241,7 @@ const app = {
             $(btn).html('<span class="spinner-border spinner-border-sm text-success"></span>');
 
             const res = await this.callAPI('add_set', { ex_id: exId });
-            console.log(res);
+            // console.log(res);
             if (res.success) {
                 setTimeout(() => {  
                     $(btn).html(originalHtmlBtn);   
@@ -306,7 +313,7 @@ const app = {
                 return;
             }
             const res = await this.callAPI('save_set', { ex_id: exId, serie: numSerie, peso: peso, reps: reps, xp_valor: xpValor });
-            console.log(res);
+            // console.log(res);
             if (res.success) {
                 this.totalXP = parseInt(res.novo_total || res.novo_xp) || this.totalXP;
                 this.updateXPDisplay();
@@ -328,7 +335,7 @@ const app = {
         } else {
             // DESMARCAR
             const res = await this.callAPI('uncheck_set', { ex_id: exId, serie: numSerie });
-            console.log(res);
+            // console.log(res);
             if (res.success) {
                 this.totalXP = parseInt(res.novo_xp) || this.totalXP;
                 this.updateXPDisplay();
@@ -381,9 +388,12 @@ const app = {
                     $list.find('.set-row').each(async (index, rowElement) => {
                         const novoNum = index + 1;
                         const h = await TreinoService.fetchHistorico(exId,novoNum);//historico[index];
+                        const dadoAnteriorRmv = (h?.peso && h?.reps)
+                            ? `${h.peso}${h.und ?? ''} x ${h.reps}`
+                            : '--';
                         const $currentRow = $(rowElement);
                         $currentRow.find('.set-number').text(`S${novoNum}`);
-                        $currentRow.find('.history-val').text(h ? `${h.peso}${h.und} x ${h.reps}` : '--');
+                        $currentRow.find('.history-val').text(dadoAnteriorRmv);
                     });
                     this.showToast("Série removida", "info");
                 });
@@ -432,7 +442,7 @@ const app = {
 
                 // Chamada para a API
                 const res = await this.callAPI('finish_workout');
-                console.log(res);
+                // console.log(res);
                 if (res.success) {
                     // USANDO DADOS DIRETOS DA API
                     const resumo = res.resumo; 

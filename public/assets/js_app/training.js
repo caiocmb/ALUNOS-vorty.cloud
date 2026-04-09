@@ -1,3 +1,10 @@
+// Quando a página carrega, injetamos um estado novo no histórico
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    // Se o usuário clicar em "Voltar", redirecionamos para a pagina anterior
+    window.location.href = "/home";
+};
+
 const modalExercicio = document.getElementById('modal-exercicio');
 
 if (modalExercicio) {
