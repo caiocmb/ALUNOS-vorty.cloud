@@ -69,7 +69,7 @@ $treinoId = $matches[1] ?? null;
 <div id="finish-overlay" style="display:none;">
     <div class="summary-card" id="capture-area">
         <div class="text-center mb-3">
-            <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_LIGHT'] ?>" style="height: 50px; filter: drop-shadow(0 0 5px var(--brand-green));">
+            <img src="/assets/img/logos/<?= $_ENV['COMPANY_LOGO_LIGHT'] ?>" height="50px" style="height: 50px; filter: drop-shadow(0 0 5px var(--brand-green));">
         </div>
 
         <h1 class="orbitron text-success mb-1" style="font-size: 1.5rem;">MISSÃO CUMPRIDA</h1>
