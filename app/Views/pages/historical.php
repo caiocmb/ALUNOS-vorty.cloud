@@ -87,11 +87,11 @@ $dados = $resumo['data'];
         // se o nome do treino for 'XP_IO_S' deve gerar um card generico, para mostrar que foi retirado o valor de XP (tipo um extrato bancario), da mesma forma para o 'XP_IO_E', s´que esse é uma entrada de saldo.
         if($value['name_training'] == 'XP_IO_S'){     
             $saldoio = 'S';      
-            $value['name_training'] = 'XP Retirado';           
+            $value['name_training'] = 'Ajuste de Saldo';           
             $div_xp = "<div class=\"text-danger small font-weight-bold\"> -".$value['xp']." XP retirados</div>";        
         } elseif($value['name_training'] == 'XP_IO_E'){
             $saldoio = 'S';  
-            $value['name_training'] = 'XP Adquirido';
+            $value['name_training'] = 'Ajuste de Saldo';
             $div_xp = "<div class=\"text-success small font-weight-bold\"> +".$value['xp']." XP recebidos</div>";
         }
 

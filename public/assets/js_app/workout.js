@@ -120,6 +120,9 @@ const app = {
                 this.callAPI('iniciar_treino');
             }
 
+            // Configura a resincronização automática ---
+            this.setupVisibilitySync();
+
             this.startTimer();
             await this.renderWorkout(); 
         } catch (e) {
@@ -128,6 +131,44 @@ const app = {
         }
     },
 
+    setupVisibilitySync() {
+        // Escuta a troca de abas
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                this.syncTimer(); // Apenas sincroniza o visor
+            }
+        });
+
+        // Escuta o ganho de foco da janela
+        window.addEventListener('focus', () => {
+            this.syncTimer(); // Apenas sincroniza o visor
+        });
+    },
+
+    syncTimer() {
+        if (!this.startTime) return;
+        
+        const now = Date.now();
+        const diffInSeconds = Math.floor((now - this.startTime) / 1000);
+        
+        // Atualiza o visor imediatamente
+        this.updateClock(diffInSeconds > 0 ? diffInSeconds : 0);
+    },
+
+    startTimer() {
+        if (this.timer) clearInterval(this.timer);
+        
+        // Executa uma vez imediatamente para evitar o delay de 1s inicial
+        this.syncTimer(); 
+
+        this.timer = setInterval(() => {
+            const now = Date.now();
+            const diffInSeconds = Math.floor((now - this.startTime) / 1000);
+            this.updateClock(diffInSeconds > 0 ? diffInSeconds : 0);
+        }, 1000);
+    },
+
+    /* // oculto para teste de sincronizacao de aba fechada
     startTimer() {
         if (this.timer) clearInterval(this.timer);
         this.timer = setInterval(() => {
@@ -135,7 +176,7 @@ const app = {
             const diffInSeconds = Math.floor((now - this.startTime) / 1000);
             this.updateClock(diffInSeconds > 0 ? diffInSeconds : 0);
         }, 1000);
-    },
+    },*/
 
     updateClock(totalSeconds) {
         let h = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
