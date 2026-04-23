@@ -132,16 +132,25 @@ const app = {
     },
 
     setupVisibilitySync() {
-        // Escuta a troca de abas
+        // 1. O padrão para browsers modernos
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
-                this.syncTimer(); // Apenas sincroniza o visor
+                console.log(">>> [SYNC] Visibility Change - Ativo");
+                this.syncTimer();
             }
         });
 
-        // Escuta o ganho de foco da janela
+        // 2. O salvador de vidas do iOS (Safari)
+        // Esse evento dispara sempre que a página é exibida, 
+        // mesmo que venha do cache de suspensão do sistema.
+        window.addEventListener('pageshow', (event) => {
+            console.log(">>> [SYNC] Pageshow - Ativo (iOS Focus)");
+            this.syncTimer();
+        });
+
+        // 3. Fallback de segurança para quando o usuário volta de uma tela de bloqueio
         window.addEventListener('focus', () => {
-            this.syncTimer(); // Apenas sincroniza o visor
+            this.syncTimer();
         });
     },
 
