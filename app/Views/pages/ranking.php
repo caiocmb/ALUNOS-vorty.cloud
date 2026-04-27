@@ -15,45 +15,59 @@ if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e')
         <div style="width: 40px;"></div>
     </div>
 
-    <div class="card mb-4 border-0 shadow-sm user-position-card">
-        <div class="card-body p-3">
-            <div class="row align-items-center g-3">
-                <div class="col-auto">
-                    <div class="user-avatar-parent">
-                        <img src="https://i.pravatar.cc/150?u=me" class="rounded-circle border border-2 border-success" width="60">
-                        <div class="user-rank-badge shadow">24º</div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="brand-rajdhani text-uppercase fw-bold text-muted small mb-1" style="letter-spacing: 1px;">Sua Performance</div>
-                    <div class="brand-orbitron h3 mb-0 text-truncate">Caio Barros</div>
-                    <div class="d-flex align-items-center gap-2 mt-1">
-                        <span class="badge bg-success-lt brand-rajdhani">TOP 15%</span>
-                        <span class="text-success fw-bold brand-rajdhani small">🔥 4.820 XP</span>
-                    </div>
-                </div>
-                <div class="col-auto text-end">
-                    <div class="brand-rajdhani small text-muted">Faltam <b class="text-white">180 XP</b></div>
-                    <div class="brand-rajdhani small text-muted">para 23º</div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <div class="ranking-tabs-wrapper mb-4">
         <ul class="nav nav-pills custom-capsule" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active tab-item" data-bs-toggle="tab" href="#xp">RANKING GERAL</a>
+                <a class="nav-link active tab-item" data-bs-toggle="tab" href="#xp">GERAL</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link tab-item" data-bs-toggle="tab" href="#amigos">RANKING AMIGOS</a>
+                <a class="nav-link tab-item" data-bs-toggle="tab" href="#amigos">MEUS AMIGOS</a>
             </li>
         </ul>
     </div>
 
+
+
     <div class="tab-content">
         <div class="tab-pane fade show active" id="xp">
             <div class="space-y-3">
+
+                <!-- CARD DE DESTAQUE COM POSIÇÃO DO USUÁRIO -->
+                <div class="card mb-4 border-0 shadow-lg overflow-hidden meu-ranking-card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); position: relative; border-left: 4px solid #32ba3c !important;">
+                    <div style="position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: rgba(50, 186, 60, 0.12); filter: blur(40px); border-radius: 50%;"></div>
+                    
+                    <div class="card-body p-4 position-relative">
+                        <div class="row align-items-center g-0">
+                            
+                            <div class="col-auto pe-4 border-end border-white-10 text-center rank-section" style="min-width: 100px;">
+                                <div class="text-white-50 extra-small text-uppercase mb-1 brand-orbitron" style="letter-spacing: 1px;">Sua Posição</div>
+                                <div class="brand-orbitron h1 mb-0 text-success" style="line-height: 1; font-size: 2.5rem;">24º</div>
+                            </div>
+
+                            <div class="col-auto text-end border-start border-white-10 ps-4 stats-section">
+                                <div class="brand-orbitron h2 mb-1 text-white" style="line-height: 1;">
+                                    4.820 <span class="text-success fs-5">XP</span>
+                                </div>
+                                
+                                <div class="mt-2 text-muted brand-rajdhani progress-wrapper">
+                                    <div class="d-flex justify-content-between align-items-center mb-1 small">
+                                        <span>Meta para <b class="text-white">23º</b></span>
+                                        <span class="text-white fw-bold">82%</span>
+                                    </div>
+                                    <div class="progress bg-dark shadow-sm" style="height: 6px; width: 180px; border-radius: 3px;">
+                                        <div class="progress-bar bg-success" style="width: 82%; box-shadow: 0 0 10px rgba(50, 186, 60, 0.4);"></div>
+                                    </div>
+                                    <div class="extra-small mt-1 text-uppercase fw-bold" style="font-size: 0.6rem;">Faltam 180 XP para subir</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RANKING GERAL -->
                 <div class="ranking-card champion-card p-3">
                     <div class="row align-items-center g-0">
                         <div class="col-auto">
@@ -105,11 +119,26 @@ if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e')
 
         <div class="tab-pane fade" id="amigos">
            
-            <div class="text-center mb-4">
-                <div class="badge bg-primary-lt brand-orbitron px-3 py-2 mb-2" style="letter-spacing: 2px;">
-                    TEMPORADA DE ABRIL
+            <div class="card border-0 shadow-sm overflow-hidden mb-4" style="border-radius: 20px;">
+                <div class="card-body p-4 text-center">
+                    <div class="brand-rajdhani text-success fw-bold small mb-2" style="letter-spacing: 2px;">CONECTE-SE AOS SEUS AMIGOS</div>                
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button class="btn btn-outline-success w-100 brand-rajdhani fw-bold py-3" data-bs-toggle="modal" data-bs-target="#modal-discovery">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M2 21v-2a4 4 0 0 1 4 -4h4c.96 0 1.84 .338 2.53 .901" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M16 19h6" /><path d="M19 16v6" />
+                                </svg>
+                                CONECTAR
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-success w-100 brand-rajdhani fw-bold py-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modal-scanner">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-qrcode me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M7 17l0 .01" /><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M7 7l0 .01" /><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M17 7l0 .01" /><path d="M14 14l3 0" /><path d="M20 14l0 .01" /><path d="M14 14l0 3" /><path d="M14 20l7 0" /><path d="M17 17l3 0" /><path d="M20 17l0 3" /></svg>
+                                ESCANEAR QR
+                            </button>
+                        </div>
+                    </div>         
                 </div>
-                <p class="text-muted small brand-rajdhani">A temporada encerra em: <b class="text-white">04d 12h 30m</b></p>
             </div>
 
             <div class="row g-2 align-items-end justify-content-center mb-4" style="min-height: 160px;">
@@ -170,33 +199,8 @@ if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e')
                     </div>
                 </div>
             </div>
-
-            <div class="card border-0 shadow-sm overflow-hidden mb-4" style="border-radius: 20px;">
-                <div class="card-body p-4 text-center">
-                    <div class="brand-rajdhani text-success fw-bold small mb-2" style="letter-spacing: 2px;">CONECTE-SE AOS SEUS AMIGOS</div>
-                    
-
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <button class="btn btn-outline-success w-100 brand-rajdhani fw-bold py-3" data-bs-toggle="modal" data-bs-target="#modal-discovery">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M2 21v-2a4 4 0 0 1 4 -4h4c.96 0 1.84 .338 2.53 .901" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M16 19h6" /><path d="M19 16v6" />
-</svg>
-                                CONECTAR
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-success w-100 brand-rajdhani fw-bold py-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modal-scanner">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-qrcode me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M7 17l0 .01" /><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M7 7l0 .01" /><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M17 7l0 .01" /><path d="M14 14l3 0" /><path d="M20 14l0 .01" /><path d="M14 14l0 3" /><path d="M14 20l7 0" /><path d="M17 17l3 0" /><path d="M20 17l0 3" /></svg>
-                                ESCANEAR QR
-                            </button>
-                        </div>
-                    </div>
-
-         
-                </div>
-            </div>
-
+            
+            <!-- modais QR -->            
             <div class="modal modal-blur fade" id="modal-discovery" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content bg-dark text-white border-success">

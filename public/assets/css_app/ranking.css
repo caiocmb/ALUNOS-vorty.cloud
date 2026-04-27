@@ -15,6 +15,53 @@
     margin: 0 auto;
 }
 
+/* Estilos base para o card específico */
+.meu-ranking-card .border-white-10 {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Ajuste Mobile Isolado */
+@media (max-width: 768px) {
+    .meu-ranking-card .row {
+        flex-direction: column !important;
+        text-align: center !important;
+    }
+
+    /* Remove bordas laterais e transforma em espaçamento vertical */
+    .meu-ranking-card .rank-section, 
+    .meu-ranking-card .info-section, 
+    .meu-ranking-card .stats-section {
+        border: none !important;
+        padding: 15px 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Adiciona uma linha divisória entre os blocos no mobile */
+    .meu-ranking-card .info-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .meu-ranking-card .user-info-wrapper {
+        justify-content: center !important;
+    }
+
+    .meu-ranking-card .stats-section {
+        text-align: center !important;
+    }
+
+    .meu-ranking-card .progress {
+        margin: 0 auto !important;
+    }
+
+    .meu-ranking-card .progress-wrapper {
+        display: inline-block;
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
 /* Overlay do Scanner (Quadrado guia) */
 .scanner-overlay {
     position: absolute;
