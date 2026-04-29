@@ -1,6 +1,6 @@
 <div class="container-tight py-4" style="max-width: 450px; margin: 0 auto;">
 <?php 
-if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e' && $_SESSION['user_id'] <> '0b0c0487-162a-11f1-a114-c22b8d44ac94' && $_SESSION['user_id'] <> '266e7bb6-cf92-11ef-86f6-c1bd71fda12e')
+if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e' && $_SESSION['user_id'] <> '0b0c0487-162a-11f1-a114-c22b8d44ac94' && $_SESSION['user_id'] <> '266e7bb6-cf92-11ef-86f6-c1bd71fda12e' && $_SESSION['user_id'] <> 'eb863e42-1a2b-11f1-a114-c22b8d44ac94')
 { 
     // redirecionar para a index
     header('Location: /home');
@@ -42,7 +42,7 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
 
                 <!-- CARD DE DESTAQUE COM POSIÇÃO DO USUÁRIO -->
                 <?php 
-                if(isset($rankings['data']['posicao_usuario']) && $rankings['data']['posicao_usuario'] <> null && $rankings['data']['posicao_usuario'] > 1)
+                if(isset($rankings['data']['posicao_usuario']) && $rankings['data']['posicao_usuario'] <> null )
                 {
                 ?>
                 <div class="card mb-4 border-0 shadow-lg overflow-hidden meu-ranking-card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); position: relative; border-left: 4px solid #32ba3c !important;">
@@ -60,16 +60,42 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                                 <div class="brand-orbitron h2 mb-1" style="line-height: 1; color:#fff;">
                                     <?= number_format($rankings['data']['xp_total_usuario'], 0, ',', '.') ?> <span class="text-success fs-5">XP</span>
                                 </div>
-                                
-                                <div class="mt-2 text-muted brand-rajdhani progress-wrapper">
-                                    <div class="d-flex justify-content-between align-items-center mb-1 small">
-                                        <span>Meta para <b class=""><?= $rankings['data']['proxima_posicao'] ?>º</b></span>
-                                        <span class="fw-bold"><?= number_format($rankings['data']['percentual_progresso'], 0, ',', '.') ?>%</span>
-                                    </div>
-                                    <div class="progress bg-dark shadow-sm" style="height: 6px; width: 180px; border-radius: 3px;">
-                                        <div class="progress-bar bg-success" style="width: <?= $rankings['data']['percentual_progresso'] ?>%; box-shadow: 0 0 10px rgba(50, 186, 60, 0.4);"></div>
-                                    </div>
-                                    <div class="extra-small mt-1 text-uppercase fw-bold" style="font-size: 0.6rem;">Faltam <?= number_format($rankings['data']['proxima_posicao_xp_faltando'], 0, ',', '.') ?> XP para subir</div>
+                                <div class="mt-2 brand-rajdhani">
+                                    <?php if($rankings['data']['posicao_usuario'] <> 1): ?>
+                                        <div class="progress-wrapper">
+                                            <div class="d-flex justify-content-between align-items-center mb-1 small">
+                                                <span class="text-muted">Meta para <b class="text-white"><?= $rankings['data']['proxima_posicao'] ?>º</b></span>
+                                                <span class="fw-bold text-success"><?= number_format($rankings['data']['percentual_progresso'], 0, ',', '.') ?>%</span>
+                                            </div>
+                                            <div class="progress bg-dark shadow-sm" style="height: 6px; width: 180px; border-radius: 3px;">
+                                                <div class="progress-bar bg-success" style="width: <?= $rankings['data']['percentual_progresso'] ?>%; box-shadow: 0 0 10px rgba(50, 186, 60, 0.4);"></div>
+                                            </div>
+                                            <div class="extra-small mt-1 text-uppercase fw-bold text-muted" style="font-size: 0.6rem;">
+                                                Faltam <span class="text-white"><?= number_format($rankings['data']['proxima_posicao_xp_faltando'], 0, ',', '.') ?> XP</span> para subir
+                                            </div>
+                                        </div>
+
+                                    <?php else: ?>
+                                        <div class="d-flex align-items-center gap-2 py-1">
+                                            <div class="d-flex align-items-center justify-content-center bg-success-lt rounded-circle" style="width: 32px; height: 32px; box-shadow: 0 0 15px rgba(50, 186, 60, 0.3);">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 3px rgba(50, 186, 60, 0.5));">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M8 21l8 0"></path>
+                <path d="M12 17l0 4"></path>
+                <path d="M7 4l10 0"></path>
+                <path d="M17 4v8a5 5 0 0 1 -10 0v-8"></path>
+                <path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                <path d="M7 9a2 2 0 1 0 -4 0"></path>
+                <path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                <path d="M21 9a2 2 0 1 0 -4 0"></path>
+            </svg>
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold text-success text-uppercase lh-1" style="letter-spacing: 1px; font-size: 0.8rem;">Você é o #1!</div>
+                                                <div class="extra-small text-muted text-uppercase" style="font-size: 0.6rem;">O topo da montanha é seu.</div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
 
