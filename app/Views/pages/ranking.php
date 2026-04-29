@@ -144,7 +144,7 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                     else
                     {
                 ?>
-                    <div class="mt-4 bg-dark-card rounded-3 overflow-hidden border border-white-10 shadow-sm">
+                    <div class="mt-0 bg-dark-card rounded-3 overflow-hidden border border-white-10 shadow-sm">
                         <div class="d-flex align-items-center p-2 border-bottom border-white-10 ranking-item-mini">
                             <div class="text-muted brand-orbitron extra-small px-3" style="min-width: 55px;"><?= $value['posicao'] ?>º</div>
                             <div class="flex-fill brand-orbitron text-white-50" style="font-size: 0.75rem;"><?= $value['nickname'] ?></div>
