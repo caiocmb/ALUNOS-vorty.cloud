@@ -1,6 +1,6 @@
 <div class="container-tight py-4" style="max-width: 450px; margin: 0 auto;">
 <?php 
-if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e' && $_SESSION['user_id'] <> '0b0c0487-162a-11f1-a114-c22b8d44ac94')
+if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e' && $_SESSION['user_id'] <> '0b0c0487-162a-11f1-a114-c22b8d44ac94' && $_SESSION['user_id'] <> '266e7bb6-cf92-11ef-86f6-c1bd71fda12e')
 { 
     // redirecionar para a index
     header('Location: /home');
