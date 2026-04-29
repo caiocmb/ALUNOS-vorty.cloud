@@ -4,7 +4,13 @@ if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e')
 { 
     // redirecionar para a index
     header('Location: /home');
- }
+}
+
+if(!isset($rankings['data']) && empty($rankings['data'])){
+    echo "<div class='alert alert-danger '>Nenhum dado disponível. <a href='/home' class='alert-link'>Voltar</a></div>";
+    return;
+}
+
 ?>
     
     <div class="d-flex align-items-center justify-content-between mb-4 px-2">
@@ -35,6 +41,10 @@ if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e')
             <div class="space-y-3">
 
                 <!-- CARD DE DESTAQUE COM POSIÇÃO DO USUÁRIO -->
+                <?php 
+                if(isset($rankings['data']['posicao_usuario']) && $rankings['data']['posicao_usuario'] <> null && $rankings['data']['posicao_usuario'] > 1)
+                {
+                ?>
                 <div class="card mb-4 border-0 shadow-lg overflow-hidden meu-ranking-card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); position: relative; border-left: 4px solid #32ba3c !important;">
                     <div style="position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: rgba(50, 186, 60, 0.12); filter: blur(40px); border-radius: 50%;"></div>
                     
@@ -43,77 +53,109 @@ if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e')
                             
                             <div class="col-auto pe-4 border-end border-white-10 text-center rank-section" style="min-width: 100px;">
                                 <div class="text-white-50 extra-small text-uppercase mb-1 brand-orbitron" style="letter-spacing: 1px;">Sua Posição</div>
-                                <div class="brand-orbitron h1 mb-0 text-success" style="line-height: 1; font-size: 2.5rem;">24º</div>
+                                <div class="brand-orbitron h1 mb-0 text-success" style="line-height: 1; font-size: 2.5rem;"><?= $rankings['data']['posicao_usuario']; ?>º</div>
                             </div>
 
                             <div class="col-auto text-end border-start border-white-10 ps-4 stats-section">
-                                <div class="brand-orbitron h2 mb-1 text-white" style="line-height: 1;">
-                                    4.820 <span class="text-success fs-5">XP</span>
+                                <div class="brand-orbitron h2 mb-1" style="line-height: 1; color:#fff;">
+                                    <?= number_format($rankings['data']['xp_total_usuario'], 0, ',', '.') ?> <span class="text-success fs-5">XP</span>
                                 </div>
                                 
                                 <div class="mt-2 text-muted brand-rajdhani progress-wrapper">
                                     <div class="d-flex justify-content-between align-items-center mb-1 small">
-                                        <span>Meta para <b class="text-white">23º</b></span>
-                                        <span class="text-white fw-bold">82%</span>
+                                        <span>Meta para <b class=""><?= $rankings['data']['proxima_posicao'] ?>º</b></span>
+                                        <span class="fw-bold"><?= number_format($rankings['data']['percentual_progresso'], 0, ',', '.') ?>%</span>
                                     </div>
                                     <div class="progress bg-dark shadow-sm" style="height: 6px; width: 180px; border-radius: 3px;">
-                                        <div class="progress-bar bg-success" style="width: 82%; box-shadow: 0 0 10px rgba(50, 186, 60, 0.4);"></div>
+                                        <div class="progress-bar bg-success" style="width: <?= $rankings['data']['percentual_progresso'] ?>%; box-shadow: 0 0 10px rgba(50, 186, 60, 0.4);"></div>
                                     </div>
-                                    <div class="extra-small mt-1 text-uppercase fw-bold" style="font-size: 0.6rem;">Faltam 180 XP para subir</div>
+                                    <div class="extra-small mt-1 text-uppercase fw-bold" style="font-size: 0.6rem;">Faltam <?= number_format($rankings['data']['proxima_posicao_xp_faltando'], 0, ',', '.') ?> XP para subir</div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
                 </div>
+                <?php } ?>
 
                 <!-- RANKING GERAL -->
-                <div class="ranking-card champion-card p-3">
-                    <div class="row align-items-center g-0">
-                        <div class="col-auto">
-                            <div class="rank-badge-main rank-1">1º</div>
-                        </div>
-                        <div class="col px-3">
-                            <div class="brand-orbitron text-white h4 mb-0">Lucas Silva</div>
-                            <div class="text-success small fw-bold">🔥 12.450 XP</div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="avatar-wrapper-gold">
-                                <img src="https://i.pravatar.cc/150?u=1" class="rounded-circle" width="48">
+                <?php 
+                foreach ($rankings['data']['ranking'] as $key => $value) 
+                {
+                    // primeira posicao
+                    if($value['posicao'] == 1)
+                    {
+                ?>  
+                    <div class="ranking-card champion-card p-3">
+                        <div class="row align-items-center g-0">
+                            <div class="col-auto">
+                                <div class="rank-badge-main rank-1">1º</div>
+                            </div>
+                            <div class="col px-3">
+                                <div class="brand-orbitron  h4 mb-0" style="color:#fff;"><?= $value['nickname'] ?></div>
+                                <div class="text-success small fw-bold">🔥 <?= number_format($value['xp_total'], 0, ',', '.') ?> XP</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="avatar-wrapper-gold">
+                                    <span class="avatar avatar-lg rounded-circle avatar-glow" style="background-image: url('/photo/profile/<?= $value['foto']; ?>')"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
                 <?php 
-                $destaques = [
-                    2 => ['nome' => 'Mariana Costa', 'val' => '9.800 XP', 'class' => 'rank-2'],
-                    3 => ['nome' => 'Ricardo Monstro', 'val' => '8.150 XP', 'class' => 'rank-3']
-                ];
-                foreach($destaques as $pos => $d): ?>
-                <div class="ranking-card podio-card p-3">
-                    <div class="row align-items-center g-0">
-                        <div class="col-auto"><div class="rank-badge-main <?= $d['class'] ?>"><?= $pos ?>º</div></div>
-                        <div class="col px-3">
-                            <div class="brand-orbitron text-white small"><?= $d['nome'] ?></div>
-                            <div class="text-muted extra-small"><?= $d['val'] ?></div>
-                        </div>
-                        <div class="col-auto">
-                            <img src="https://i.pravatar.cc/150?u=<?= $pos ?>" class="rounded-circle border border-white-10" width="36">
+                    }                    
+                    // segunda posicao
+                    else if($value['posicao'] == 2)
+                    {
+                ?>
+                    <div class="ranking-card podio-card p-3">
+                        <div class="row align-items-center g-0">
+                            <div class="col-auto"><div class="rank-badge-main rank-2">2º</div></div>
+                            <div class="col px-3">
+                                <div class="brand-orbitron text-white small"><?= $value['nickname'] ?></div>
+                                <div class="text-muted extra-small"><?= number_format($value['xp_total'], 0, ',', '.') ?> XP</div>
+                            </div>
+                            <div class="col-auto">                               
+                                <span class="avatar avatar-md rounded-circle avatar-glow" style="background-image: url('/photo/profile/<?= $value['foto']; ?>')"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php endforeach; ?>
-
-                <div class="mt-4 bg-dark-card rounded-3 overflow-hidden border border-white-10 shadow-sm">
-                    <?php for($i=4; $i<=10; $i++): ?>
-                    <div class="d-flex align-items-center p-2 border-bottom border-white-10 ranking-item-mini">
-                        <div class="text-muted brand-orbitron extra-small px-3" style="min-width: 55px;"><?= $i ?>º</div>
-                        <div class="flex-fill brand-orbitron text-white-50" style="font-size: 0.75rem;">Atleta Exemplo #<?= $i ?></div>
-                        <div class="text-success extra-small fw-bold px-3"><?= 5000 - ($i * 400) ?> XP</div>
+                <?php
+                    }   
+                    // terceira posicao
+                    else if($value['posicao'] == 3)
+                    {
+                ?>
+                    <div class="ranking-card podio-card p-3">
+                        <div class="row align-items-center g-0">
+                            <div class="col-auto"><div class="rank-badge-main rank-3">3º</div></div>
+                            <div class="col px-3">
+                                <div class="brand-orbitron text-white small"><?= $value['nickname'] ?></div>
+                                <div class="text-muted extra-small"><?= number_format($value['xp_total'], 0, ',', '.') ?> XP</div>
+                            </div>
+                            <div class="col-auto">
+                                <span class="avatar avatar-md rounded-circle avatar-glow" style="background-image: url('/photo/profile/<?= $value['foto']; ?>')"></span>
+                            </div>
+                        </div>
                     </div>
-                    <?php endfor; ?>
-                </div>
+                <?php
+                    }
+                    //restante
+                    else
+                    {
+                ?>
+                    <div class="mt-4 bg-dark-card rounded-3 overflow-hidden border border-white-10 shadow-sm">
+                        <div class="d-flex align-items-center p-2 border-bottom border-white-10 ranking-item-mini">
+                            <div class="text-muted brand-orbitron extra-small px-3" style="min-width: 55px;"><?= $value['posicao'] ?>º</div>
+                            <div class="flex-fill brand-orbitron text-white-50" style="font-size: 0.75rem;"><?= $value['nickname'] ?></div>
+                            <div class="text-success extra-small fw-bold px-3"><?= number_format($value['xp_total'], 0, ',', '.') ?> XP</div>
+                        </div>
+                    </div>
+                <?php
+                    }
+                }   
+                ?>
+ 
             </div>
         </div>
 

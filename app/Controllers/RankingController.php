@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-//use App\Models\HistoricalModel;
+use App\Models\RankingModel;
 use App\Middleware\Authenticator;
 
 class RankingController extends Controller {
@@ -11,11 +11,11 @@ class RankingController extends Controller {
 
     public function __construct() {
         Authenticator::handle();
-        //$this->model = new HistoricalModel;
+        $this->model = new RankingModel;
     }
 
     public function index() {        
-        $this->view('ranking', []);
+        $this->view('ranking', ['rankings' => $this->model->ListRanking()]);
     }
     
 }
