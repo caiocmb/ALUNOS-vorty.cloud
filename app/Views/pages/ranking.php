@@ -6,11 +6,16 @@ if($_SESSION['user_id'] <> 'd22ae9b7-d776-11ef-86f6-c1bd71fda12e' && $_SESSION['
     header('Location: /home');
 }
 
+// caso a conta esteja inativa, nao deixa acessar
+if($_SESSION['user_status'] <> 'Ativo')
+{ 
+    header('Location: /home');
+}
+
 if(!isset($rankings['data']) && empty($rankings['data'])){
     echo "<div class='alert alert-danger '>Nenhum dado disponível. <a href='/home' class='alert-link'>Voltar</a></div>";
     return;
 }
-
 ?>
     
     <div class="d-flex align-items-center justify-content-between mb-4 px-2">
@@ -79,16 +84,16 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                                         <div class="d-flex align-items-center gap-2 py-1">
                                             <div class="d-flex align-items-center justify-content-center bg-success-lt rounded-circle" style="width: 32px; height: 32px; box-shadow: 0 0 15px rgba(50, 186, 60, 0.3);">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 3px rgba(50, 186, 60, 0.5));">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M8 21l8 0"></path>
-                <path d="M12 17l0 4"></path>
-                <path d="M7 4l10 0"></path>
-                <path d="M17 4v8a5 5 0 0 1 -10 0v-8"></path>
-                <path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                <path d="M7 9a2 2 0 1 0 -4 0"></path>
-                <path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                <path d="M21 9a2 2 0 1 0 -4 0"></path>
-            </svg>
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M8 21l8 0"></path>
+                                                    <path d="M12 17l0 4"></path>
+                                                    <path d="M7 4l10 0"></path>
+                                                    <path d="M17 4v8a5 5 0 0 1 -10 0v-8"></path>
+                                                    <path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                                    <path d="M7 9a2 2 0 1 0 -4 0"></path>
+                                                    <path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                                    <path d="M21 9a2 2 0 1 0 -4 0"></path>
+                                                </svg>
                                             </div>
                                             <div>
                                                 <div class="fw-bold text-success text-uppercase lh-1" style="letter-spacing: 1px; font-size: 0.8rem;">Você é o #1!</div>
@@ -209,63 +214,64 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                 </div>
             </div>
 
-            <div class="row g-2 align-items-end justify-content-center mb-4" style="min-height: 160px;">
-                <div class="col-4 text-center">
-                    <div class="avatar-podium silver mb-2">
-                        <img src="https://i.pravatar.cc/150?u=8" class="rounded-circle" width="50">
-                        <div class="podium-rank">2</div>
-                    </div>
-                    <div class="brand-rajdhani text-white small fw-bold text-truncate">Mariana</div>
-                    <div class="text-muted extra-small">9.2k XP</div>
-                </div>
-                <div class="col-4 text-center">
-                    <div class="avatar-podium gold mb-2">
-                        <img src="https://i.pravatar.cc/150?u=12" class="rounded-circle" width="70">
-                        <div class="podium-rank">1</div>
-                        <div class="crown-icon">👑</div>
-                    </div>
-                    <div class="brand-orbitron text-success small fw-bold text-truncate">Ricardo</div>
-                    <div class="text-success extra-small fw-bold">12.1k XP</div>
-                </div>
-                <div class="col-4 text-center">
-                    <div class="avatar-podium bronze mb-2">
-                        <img src="https://i.pravatar.cc/150?u=5" class="rounded-circle" width="50">
-                        <div class="podium-rank">3</div>
-                    </div>
-                    <div class="brand-rajdhani text-white small fw-bold text-truncate">Felipe</div>
-                    <div class="text-muted extra-small">8.8k XP</div>
-                </div>
-            </div>
 
             <div class="space-y-2 mb-4">
-                <div class="ranking-card p-3 bg-dark-card border-0">
-                    <div class="row align-items-center g-0">
-                        <div class="col-auto me-3"><span class="text-muted fw-bold brand-orbitron">4º</span></div>
-                        <div class="col-auto"><img src="https://i.pravatar.cc/150?u=22" class="rounded-circle" width="35"></div>
-                        <div class="col px-3">
-                            <div class="brand-rajdhani text-white fw-bold">Você</div>
-                            <div class="text-success extra-small">▲ 2 posições esta semana</div>
-                        </div>
-                        <div class="col-auto text-end">
-                            <div class="brand-orbitron text-white small">7.420</div>
-                            <div class="text-muted extra-small">XP</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ranking-card p-3 bg-dark-card border-0 opacity-75">
-                    <div class="row align-items-center g-0">
-                        <div class="col-auto me-3"><span class="text-muted fw-bold brand-orbitron">5º</span></div>
-                        <div class="col-auto"><img src="https://i.pravatar.cc/150?u=33" class="rounded-circle" width="35"></div>
-                        <div class="col px-3">
-                            <div class="brand-rajdhani text-white fw-bold">Beatriz Silva</div>
-                            <div class="text-danger extra-small">▼ 1 posição</div>
-                        </div>
-                        <div class="col-auto text-end">
-                            <div class="brand-orbitron text-white small">6.100</div>
-                            <div class="text-muted extra-small">XP</div>
-                        </div>
-                    </div>
-                </div>
+
+                <?php 
+                // aqui vai rolar o loop dos amigos, caso existir, gerando um bloco diferente só para a primeira posição, depois o restante segue $rankings['data']['ranking_amigos']
+                if(isset($rankings['data']['ranking_amigos']) && !empty($rankings['data']['ranking_amigos']))
+                {
+                    foreach ($rankings['data']['ranking_amigos'] as $key => $value) 
+                    {
+                        // primeira posicao
+                        if($value['posicao'] == 1)
+                        {
+                ?>                
+                            <div class="ranking-card champion-card p-3 border-0">
+                                <div class="row align-items-center g-0">
+                                    <div class="col-auto me-3"><span class="text-muted fw-bold brand-orbitron">1º</span></div>
+                                    <div class="col-auto"> <div class="avatar-podium gold mb-2">                 
+                                        <span class="avatar avatar-xl rounded-circle" style="background-image: url('/photo/profile/<?= $value['foto'] ?>')"></span>
+                                       
+                                        <div class="crown-icon">👑</div>
+                                    </div></div>
+                                    <div class="col px-3">
+                                        <div class="brand-rajdhani text-white fw-bold"><?= $value['nickname'] ?></div>
+                                        <div class="text-success small"><?= $value['status_frase'] ?></div>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <div class="brand-orbitron text-white small">7.420</div>
+                                        <div class="text-muted extra-small">XP</div>
+                                    </div>
+                                </div>
+                            </div>
+                <?php   }
+                        // segunda posicao
+                        else
+                        { 
+                ?>
+                            <div class="ranking-card p-3 border-0">
+                                <div class="row align-items-center g-0">
+                                    <div class="col-auto me-3"><span class="text-muted fw-bold brand-orbitron"><?= $value['posicao'] ?>º</span></div>
+                                    <div class="col-auto"><span class="avatar avatar-lg rounded-circle" style="background-image: url('/photo/profile/<?= $value['foto'] ?>')"></span></div>
+                                    <div class="col px-3">
+                                        <div class="brand-rajdhani text-white fw-bold"><?= $value['nickname'] ?></div>
+                                        <div class="text-success small"><?= $value['status_frase'] ?></div>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <div class="brand-orbitron text-white small"><?= number_format($value['xp_total'], 0, ',', '.') ?></div>
+                                        <div class="text-muted extra-small">XP</div>
+                                    </div>
+                                </div>
+                            </div>
+                <?php      }
+                    }
+                }
+                else            {
+                    echo "<div class='alert alert-danger'>Nenhum amigo conectado. Use o botão Conectar para gerar seu QR Code.</div>";
+                }
+                ?>
+
             </div>
             
             <!-- modais QR -->            
@@ -273,10 +279,13 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content bg-dark text-white border-success">
                         <div class="modal-body text-center py-4">
+
+                            <!-- elemento para capturar o id -->
+                            <div id="userCode" class="d-none"><?= $_SESSION['user_id']; ?></div>
                             
                             <div class="radar-container mb-3">
                                 <div class="radar-ping"></div>
-                                <img src="https://i.pravatar.cc/150?u=me" class="rounded-circle position-relative" width="80" style="z-index: 2; border: 3px solid var(--brand-green);">
+                                <span class="avatar avatar-xl rounded-circle avatar-glow" style="background-image: url('/photo/profile/<?= $_SESSION['user_photo']; ?>')"></span>
                             </div>
 
                             <h3 class="brand-orbitron text-success mb-1">MODO VISÍVEL</h3>

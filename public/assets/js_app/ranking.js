@@ -9,6 +9,7 @@
     // Puxa o código real do elemento HTML (garante consistência)
     const getMyCode = () => {
         const codeEl = document.getElementById('userCode');
+        console.log(`Obtendo código do usuário: ${codeEl ? codeEl.value : 'ERRO'}`);
         return codeEl ? codeEl.innerText.trim() : 'ERRO';
     };
 
@@ -18,7 +19,7 @@
     // Evento disparado QUANDO O MODAL TERMINA DE ABRIR
     modalDisc.addEventListener('shown.bs.modal', function () {
         const myCode = getMyCode();
-        console.log(`Iniciando Modo Visível para o código: ${myCode}`);
+        //console.log(`Iniciando Modo Visível para o código: ${myCode}`);
 
         // 1. GERAR O QR CODE DENTRO DO MODAL
         const qrcodeContainer = document.getElementById('qrcode-container');
@@ -54,19 +55,22 @@
             if (timeLeft <= 0) {
                 // Para tudo primeiro
                 stopDiscovery(); 
-                fecharModalSeguro();               
-               
+                fecharModalSeguro();             
             }
         }, 1000);
 
         // 3. INICIAR POLLING DA API (MOCKUP)
         // No real, esta rota verifica se alguém conectou com você
         discoveryInterval = setInterval(() => {
-            console.log(`[API POLLING]: Verificando se alguém conectou com ${myCode}...`);
+            console.log(`[API POLLING]: Verificando se alguém conectou`);
             // Exemplo de sucesso:
-            // fetch(`/api/check-connection/${myCode}`).then(r => r.json()).then(data => {
-            //    if(data.success) window.location.reload(); // Atualiza para mostrar amigo
-            // });
+            fetch(`/ranking/checkconn/`).then(r => r.json()).then(data => {
+               if(data.status == 'success')
+                {
+                    window.location.hash = 'amigos';
+                    location.reload();
+                }
+            });
         }, 5000); // A cada 5 segundos
     });
 
@@ -102,7 +106,7 @@
 
     // Evento disparado QUANDO O MODAL TERMINA DE ABRIR
     modalScan.addEventListener('shown.bs.modal', function () {
-        console.log("Iniciando Câmera para Escanear Rival...");
+        console.log("Iniciando Câmera para Escanear amigo...");
         
         // Verifica se a lib de leitura carregou
         if (typeof Html5Qrcode === 'undefined') {
@@ -125,7 +129,7 @@
             config,
             (decodedText) => {
                 // SUCESSO NA LEITURA
-                console.log(`[QR SCAN SUCESSO]: Código Rival Lido: ${decodedText}`);
+                console.log(`[QR SCAN SUCESSO]: Código Amigo`);
                 
                 // 1. Fecha o modal do leitor
                 if(window.bootstrap) {
@@ -133,9 +137,23 @@
                 }
 
                 // 2. Feedback e Ação
-                // Aqui você enviaria o código lido para conectar
-                // Exemplo: window.location.href = `/conectar-rival/${getMyCode()}/${decodedText}`;
-                alert(`CONECTANDO COM O RIVAL: ${decodedText}\n\nEnviando solicitação de conexão...`);
+                // aqui você pode fazer uma requisição para a API informando o código lido e quando ler, atualiza a pagina no mesmo esquema dom o hash amigos
+                    fetch(`/ranking/connect/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ codigo: decodedText })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("[API CONNECT]: Conexão solicitada com sucesso.");
+                        window.location.hash = 'amigos';
+                        location.reload();
+                    })
+                    .catch(err => {
+                        console.error("Erro ao conectar amigo:", err);
+                    });
             }
         ).catch(err => {
             console.error("Erro ao iniciar câmera (Verifique permissões HTTPS):", err);

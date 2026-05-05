@@ -18,6 +18,16 @@ class RankingModel
         return $this->apiService->exec("GET", "/ranking/");
     }
 
+    public function CheckConnection()
+    {
+        return $this->apiService->exec("GET", "/ranking/check_connection/");
+    }
+
+    public function ConnectFriend($campos)
+    {
+        return $this->apiService->exec("POST", "/ranking/", $campos);
+    }
+
 }
 
 ?>

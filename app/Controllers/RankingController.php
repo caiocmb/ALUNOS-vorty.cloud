@@ -17,5 +17,13 @@ class RankingController extends Controller {
     public function index() {        
         $this->view('ranking', ['rankings' => $this->model->ListRanking()]);
     }
+
+    public function checkconn(){
+        $this->json($this->model->CheckConnection());
+    }
+
+    public function connect(){
+        $this->json($this->model->ConnectFriend($_POST['codigo'] ?? null));
+    }
     
 }
