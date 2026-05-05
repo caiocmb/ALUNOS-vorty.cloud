@@ -147,12 +147,12 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("[API CONNECT]: Conexão solicitada com sucesso.");
+                        alert("[API CONNECT]: Conexão solicitada com sucesso.");
                         window.location.hash = 'amigos';
-                        location.reload();
+                        //location.reload();
                     })
                     .catch(err => {
-                        console.error("Erro ao conectar amigo:", err);
+                        alert( err);
                     });
             }
         ).catch(err => {
