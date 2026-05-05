@@ -143,7 +143,7 @@
                     // Atualiza o texto inicial
                     $debugContent.text("Iniciando requisição via $.post...");
 
-                    $debugContent.text("Código QR: " + decodedText);
+                   alert("Código QR: " + decodedText);
 
                     $.post('/ranking/connect/', JSON.stringify({ codigo: decodedText }), function(data) {
                         // O jQuery já tenta parsear o JSON automaticamente se o Content-Type for correto
