@@ -21,10 +21,6 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
         <div style="width: 40px;"></div>
     </div>
 
-    <div class='alert alert-danger ' id='debug-content'>DEBUG</div>
-
-   
-
     <div class="ranking-tabs-wrapper mb-4">
         <ul class="nav nav-pills custom-capsule" role="tablist">
             <li class="nav-item">

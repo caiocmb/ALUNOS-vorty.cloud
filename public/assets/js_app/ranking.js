@@ -137,31 +137,31 @@
                 }
 
                 // 2. Feedback e Ação
-                // aqui você pode fazer uma requisição para a API informando o código lido e quando ler, atualiza a pagina no mesmo esquema dom o hash amigos
-                   const $debugContent = $('#debug-content');
+                $.post('/ranking/connect/', { codigo: decodedText }, function(data) {                   
+                    if (data.status === 'success' || data.success) {
+                        setTimeout(() => { 
+                            window.location.hash = 'amigos'; 
+                            window.location.reload();
+                        }, 1500);
+                    }
 
-                    // Atualiza o texto inicial
-                    $debugContent.text("Iniciando requisição via $.post...");
-
-                   alert("Código QR: " + decodedText);
-
-                    $.post('/ranking/connect/', { codigo: decodedText }, function(data) {
-                        // O jQuery já tenta parsear o JSON automaticamente se o Content-Type for correto
-                        $debugContent.text("Sucesso na requisição:\n" + JSON.stringify(data, null, 2));
-                        
-                        if (data.status === 'success' || data.success) {
-                            setTimeout(() => { 
-                                window.location.hash = 'amigos'; 
-                            }, 1500);
+                    // caso status == error, mostra a mensagem de erro usando o toastr
+                    else if (data.status === 'error' || data.error) {
+                        let errorMsg = "Erro desconhecido. Tente novamente.";
+                        if(data.message) {
+                            errorMsg = data.message;
                         }
-                    }, 'json') // Força o jQuery a esperar um JSON como retorno
-                    .fail(function(xhr) {
-                        // Se der erro (404, 500 ou erro de parse)
-                        let errorMessage = xhr.responseText;
-                        
-                        // Se o erro for um 500 ou erro de PHP, o responseText terá o texto bruto
-                        $debugContent.html("<strong>ERRO NO SERVIDOR:</strong>\n" + errorMessage);
-                    });
+                        toastr.error(errorMsg);
+                    }
+                }, 'json') // Força o jQuery a esperar um JSON como retorno
+                .fail(function(xhr) {
+                    // aqui retorna a mensagem de erro para o usuario usando o toastr
+                    let errorMsg = "Erro desconhecido. Tente novamente.";
+                    if(xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    toastr.error(errorMsg);
+                });
             }
         ).catch(err => {
             console.error("Erro ao iniciar câmera (Verifique permissões HTTPS):", err);
