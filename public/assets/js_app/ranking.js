@@ -145,7 +145,7 @@
 
                    alert("Código QR: " + decodedText);
 
-                    $.post('/ranking/connect/', JSON.stringify({ codigo: decodedText }), function(data) {
+                    $.post('/ranking/connect/', { codigo: decodedText }, function(data) {
                         // O jQuery já tenta parsear o JSON automaticamente se o Content-Type for correto
                         $debugContent.text("Sucesso na requisição:\n" + JSON.stringify(data, null, 2));
                         
