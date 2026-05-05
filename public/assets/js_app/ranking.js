@@ -138,21 +138,38 @@
 
                 // 2. Feedback e Ação
                 // aqui você pode fazer uma requisição para a API informando o código lido e quando ler, atualiza a pagina no mesmo esquema dom o hash amigos
+                   const debugContent = document.getElementById('debug-content');
+
+                    // Atualiza o texto na tela
+                    debugContent.innerText = "Iniciando requisição...";
+
                     fetch(`/ranking/connect/`, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ codigo: decodedText })
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert("[API CONNECT]: Conexão solicitada com sucesso.");
-                        window.location.hash = 'amigos';
-                        //location.reload();
+                    .then(response => {
+                        debugContent.innerText = `Resposta recebida (Status: ${response.status})...`;
+                        return response.text(); 
+                    })
+                    .then(rawText => {
+                        try {
+                            // Tenta converter o texto em objeto para ler melhor
+                            const data = JSON.parse(rawText);
+                            debugContent.innerText = "JSON Recebido:\n" + JSON.stringify(data, null, 2);
+
+                            if (data.status === 'success' || data.success) {
+                                // Se o seu PHP retorna sucesso, ele avisa aqui
+                                setTimeout(() => { window.location.hash = 'amigos'; }, 1500);
+                            }
+                        } catch (e) {
+                            // Se o PHP retornar um erro de SQL ou HTML, ele cai aqui e te mostra o texto real
+                            debugContent.innerText = "ERRO (Não é JSON):\n" + rawText;
+                        }
                     })
                     .catch(err => {
-                        alert( err);
+                        // Erro de rede ou URL errada
+                        debugContent.innerText = "ERRO DE REDE/FETCH:\n" + err.message;
                     });
             }
         ).catch(err => {
