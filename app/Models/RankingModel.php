@@ -23,9 +23,9 @@ class RankingModel
         return $this->apiService->exec("GET", "/ranking/check_connection/");
     }
 
-    public function ConnectFriend($campos)
+    public function ConnectFriend()
     {
-        return $this->apiService->exec("POST", "/ranking/", $campos);
+        return $this->apiService->exec("POST", "/ranking/", $_POST);
     }
 
 }
