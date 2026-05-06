@@ -139,11 +139,10 @@
                 console.log(`[QR SCAN SUCESSO]: Código detectado`);
                 
                 // 1. Fecha o modal do leitor
-                if(window.bootstrap) {
-                    const modalInstance = window.bootstrap.Modal.getInstance(modalScan);
-                    if (modalInstance) modalInstance.hide();
-                }
+                    const btnFechar = modalScan.querySelector('[data-bs-dismiss="modal"]');
+                    if (btnFechar) btnFechar.click();   
 
+                
                 // parar a câmera para economizar bateria/recursos
                 html5QrCodeScanner.stop().then(() => { console.log("Câmera parada."); });
 
@@ -176,7 +175,12 @@
             }
         ).catch(err => {
             console.error("Erro ao iniciar câmera:", err);
-            document.getElementById('reader').innerHTML = '<div class="text-danger p-3 extra-small">Erro ao acessar câmera. Verifique as permissões.</div>';
+            toastr.error('Erro ao acessar câmera. Verifique as permissões.');
+            // Fecha o modal para evitar ficar preso sem câmera, mas da um timeou para não fechar de uma vez.
+            setTimeout(() => {
+                const btnFechar = modalScan.querySelector('[data-bs-dismiss="modal"]');
+                if (btnFechar) btnFechar.click();
+            }, 1000);
         });
     });
 
