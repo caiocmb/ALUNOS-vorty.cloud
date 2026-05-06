@@ -62,6 +62,92 @@
     }
 }
 
+/* Variáveis de Cores Gamer */
+:root {
+    --gold-glow: rgba(255, 215, 0, 0.4);
+    --silver-glow: rgba(192, 192, 192, 0.3);
+    --bronze-glow: rgba(205, 127, 50, 0.3);
+    --shimmer: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+/* --- ANIMAÇÕES DE ENTRADA (CASCATA) --- */
+@keyframes rankIn {
+    from { opacity: 0; transform: translateX(-15px); filter: blur(5px); }
+    to { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+.ranking-card, .ranking-item-mini {
+    opacity: 0;
+    animation: rankIn 0.4s ease-out forwards;
+}
+
+/* --- DESTAQUE TOP 3 --- */
+
+/* 1º Lugar - Glow e Pulsação */
+.champion-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid gold !important;
+    animation: rankIn 0.4s ease-out forwards, gold-pulse 3s infinite ease-in-out;
+}
+
+@keyframes gold-pulse {
+    0%, 100% { box-shadow: 0 0 10px var(--gold-glow); }
+    50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); }
+}
+
+/* 2º e 3º Lugares */
+.rank-2 { box-shadow: 0 0 15px var(--silver-glow); border: 1px solid #c0c0c0; }
+.rank-3 { box-shadow: 0 0 15px var(--bronze-glow); border: 1px solid #cd7f32; }
+
+/* --- EFEITOS CONTÍNUOS --- */
+
+/* Shimmer (Brilho passando) */
+.ranking-card::before, .ranking-item-mini::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -150%;
+    width: 50%; height: 100%;
+    background: var(--shimmer);
+    transform: skewX(-20deg);
+    transition: 0s;
+}
+
+/* Dispara o brilho em intervalos ou no Hover */
+.ranking-card:hover::before, .ranking-item-mini:hover::before {
+    left: 150%;
+    transition: 0.8s;
+}
+
+/* Interatividade Suave */
+.ranking-card, .ranking-item-mini {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ranking-card:hover {
+    transform: scale(1.01);
+    filter: brightness(1.2);
+    cursor: pointer;
+}
+
+/* Destaque para o Usuário Logado (Classe extra via PHP) */
+.is-me {
+    background: rgba(0, 123, 255, 0.1) !important;
+    border-left: 3px solid #007bff !important;
+}
+
+/* Flutuação leve para o avatar do campeão */
+.avatar-wrapper-gold .avatar-glow {
+    animation: float 4s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+
+
 /* Overlay do Scanner (Quadrado guia) */
 .scanner-overlay {
     position: absolute;

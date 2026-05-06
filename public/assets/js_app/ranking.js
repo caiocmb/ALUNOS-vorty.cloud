@@ -123,50 +123,60 @@
             aspectRatio: 1.0 // Quadrado
         };
 
-        // Inicia a câmera traseira ("environment")
+        // Criamos uma variável de controle FORA do escopo do start
+        let isScanning = false; 
+
         html5QrCodeScanner.start(
             { facingMode: "environment" }, 
             config,
             (decodedText) => {
-                // SUCESSO NA LEITURA
-                console.log(`[QR SCAN SUCESSO]: Código Amigo`);
+                // SE já estiver processando, ignora as próximas leituras
+                if (isScanning) return;
+                
+                // Bloqueia novas leituras
+                isScanning = true;
+                
+                console.log(`[QR SCAN SUCESSO]: Código detectado`);
                 
                 // 1. Fecha o modal do leitor
                 if(window.bootstrap) {
-                    window.bootstrap.Modal.getInstance(modalScan).hide();
+                    const modalInstance = window.bootstrap.Modal.getInstance(modalScan);
+                    if (modalInstance) modalInstance.hide();
                 }
 
-                // 2. Feedback e Ação
+                // parar a câmera para economizar bateria/recursos
+                html5QrCodeScanner.stop().then(() => { console.log("Câmera parada."); });
+
+                // 2. Envio para a API
                 $.post('/ranking/connect/', { codigo: decodedText }, function(data) {                   
                     if (data.status === 'success' || data.success) {
+                        toastr.success("Conexão realizada!"); // Feedback visual imediato
                         setTimeout(() => { 
                             window.location.hash = 'amigos'; 
                             window.location.reload();
                         }, 1500);
                     }
-
-                    // caso status == error, mostra a mensagem de erro usando o toastr
-                    else if (data.status === 'error' || data.error) {
-                        let errorMsg = "Erro desconhecido. Tente novamente.";
-                        if(data.message) {
-                            errorMsg = data.message;
-                        }
+                    else {
+                        let errorMsg = data.message || "Erro desconhecido.";
                         toastr.error(errorMsg);
+                        // Como deu erro, liberamos para o usuário tentar ler novamente
+                        isScanning = false;
                     }
-                }, 'json') // Força o jQuery a esperar um JSON como retorno
+                }, 'json')
                 .fail(function(xhr) {
-                    // aqui retorna a mensagem de erro para o usuario usando o toastr
-                    let errorMsg = "Erro desconhecido. Tente novamente.";
+                    let errorMsg = "Erro na requisição. Tente novamente.";
                     if(xhr.responseJSON && xhr.responseJSON.message) {
                         errorMsg = xhr.responseJSON.message;
                     }
                     toastr.error(errorMsg);
+                    
+                    // Liberamos a trava para permitir nova tentativa após o erro
+                    isScanning = false;
                 });
             }
         ).catch(err => {
-            console.error("Erro ao iniciar câmera (Verifique permissões HTTPS):", err);
-            // Mostra erro amigável no container da câmera
-            document.getElementById('reader').innerHTML = '<div class="text-danger p-3 extra-small">Erro ao acessar câmera. Verifique se o site possui permissão de câmera e está rodando em HTTPS.</div>';
+            console.error("Erro ao iniciar câmera:", err);
+            document.getElementById('reader').innerHTML = '<div class="text-danger p-3 extra-small">Erro ao acessar câmera. Verifique as permissões.</div>';
         });
     });
 
@@ -214,3 +224,5 @@
 
         handleTabs();
     })();
+
+

@@ -109,6 +109,7 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                     // primeira posicao
                     if($value['posicao'] == 1)
                     {
+                        
                 ?>  
                     <div class="ranking-card champion-card p-3">
                         <div class="row align-items-center g-0">
