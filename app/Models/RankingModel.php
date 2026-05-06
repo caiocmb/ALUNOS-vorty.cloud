@@ -28,6 +28,11 @@ class RankingModel
         return $this->apiService->exec("POST", "/ranking/", $_POST);
     }
 
+    public function DisconnectFriend()
+    {
+        return $this->apiService->exec("DELETE", "/ranking/", $_POST);
+    }
+
 }
 
 ?>

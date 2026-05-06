@@ -199,6 +199,50 @@
 
 })();
 
+/// exclusao
+
+$('.long-press-delete').on('touchstart', function(e) {
+    const _this = $(this);
+    const friendUid = _this.data('uid');
+    
+    // Inicia o contador para o Long Press
+    _this.data('timer', setTimeout(function() {
+        
+        // Feedback tátil (vibração curta)
+        if (navigator.vibrate) navigator.vibrate(60);
+
+        // Efeito visual imediato (Optimistic UI)
+        _this.css({
+            'transition': 'all 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045)',
+            'transform': 'scale(0.2) translateX(200%)',
+            'opacity': '0'
+        });
+
+        // Chamada API
+        $.post('/ranking/disconnect', { 
+            codigo: friendUid 
+        }, function(data) {
+            if (data.status == 'success') {
+                // Remove do DOM definitivamente
+                setTimeout(() => _this.remove(), 400);
+                toastr.success('Conexão removida com sucesso!');
+            } else {
+                // Se a API retornar erro, volta o card e avisa
+                _this.css({'transform': 'none', 'opacity': '1', 'scale': '1'});
+                toastr.error(data.message || 'Não foi possível remover o amigo.');
+            }
+        }, 'json').fail(function() {
+            // Em caso de erro de rede, restaura o card
+            _this.css({'transform': 'none', 'opacity': '1', 'scale': '1'});
+            toastr.warning('Erro de conexão com o servidor.');
+        });
+
+    }, 800));
+
+}).on('touchend touchmove', function() {
+    // Se o usuário soltar ou rolar a tela antes dos 800ms, cancela tudo
+    clearTimeout($(this).data('timer'));
+});
 
 
 ///------------------------------

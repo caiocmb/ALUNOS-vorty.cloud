@@ -147,6 +147,33 @@
 }
 
 
+/* Bloqueio global de seleção e toques longos do sistema */
+html, body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    /* Desativa o menu de "salvar imagem" ou "copiar link" no mobile */
+    -webkit-touch-callout: none;
+    
+    /* Remove o destaque cinza ao clicar em elementos no Android/iOS */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Caso você tenha inputs ou textareas, eles precisam continuar selecionáveis */
+input, textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+/* Cursor de pointer para dar feedback de clique nos itens interativos */
+.long-press-delete {
+    cursor: pointer;
+    touch-action: manipulation; /* Melhora a resposta do toque no mobile */
+}
 
 /* Overlay do Scanner (Quadrado guia) */
 .scanner-overlay {

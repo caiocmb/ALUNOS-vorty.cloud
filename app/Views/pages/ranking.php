@@ -221,7 +221,7 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                         if($value['posicao'] == 1)
                         {
                 ?>                
-                            <div class="ranking-card champion-card p-3 border-0">
+                            <div class="ranking-card champion-card p-3 border-0 <?= ($value['nickname'] <> 'Você') ? 'long-press-delete' : '' ?>" data-uid="<?= $value['friend_uid'] ?>">
                                 <div class="row align-items-center g-0">
                                     <div class="col-auto me-3"><span class="text-muted fw-bold brand-orbitron">1º</span></div>
                                     <div class="col-auto"> <div class="avatar-podium gold mb-2">                 
@@ -244,7 +244,7 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                         else
                         { 
                 ?>
-                            <div class="ranking-card p-3 border-0">
+                            <div class="ranking-card p-3 border-0 <?= ($value['nickname'] <> 'Você') ? 'long-press-delete' : '' ?>" data-uid="<?= $value['friend_uid'] ?>">
                                 <div class="row align-items-center g-0">
                                     <div class="col-auto me-3"><span class="text-muted fw-bold brand-orbitron"><?= $value['posicao'] ?>º</span></div>
                                     <div class="col-auto"><span class="avatar avatar-lg rounded-circle" style="background-image: url('/photo/profile/<?= $value['foto'] ?>')"></span></div>

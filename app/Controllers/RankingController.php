@@ -23,7 +23,11 @@ class RankingController extends Controller {
     }
 
     public function connect(){
-        $this->json($this->model->ConnectFriend($_POST['codigo'] ?? null));
+        $this->json($this->model->ConnectFriend());
     }
-    
+
+    public function disconnect(){
+        $this->json($this->model->DisconnectFriend());
+    }
+
 }
