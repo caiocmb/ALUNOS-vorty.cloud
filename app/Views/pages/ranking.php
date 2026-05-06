@@ -233,7 +233,7 @@ if(!isset($rankings['data']) && empty($rankings['data'])){
                                         <div class="text-success small"><?= $value['status_frase'] ?></div>
                                     </div>
                                     <div class="col-auto text-end">
-                                        <div class="brand-orbitron text-white small">7.420</div>
+                                        <div class="brand-orbitron text-white small"><?= number_format($value['xp_total'], 0, ',', '.') ?></div>
                                         <div class="text-muted extra-small">XP</div>
                                     </div>
                                 </div>
